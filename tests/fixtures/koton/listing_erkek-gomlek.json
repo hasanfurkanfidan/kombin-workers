@@ -1,0 +1,51 @@
+{
+ "pagination": {
+  "current_page": 1,
+  "num_pages": 42,
+  "page_size": 24,
+  "total_count": 985
+ },
+ "products": [
+  {
+   "pk": 1620814,
+   "name": "Cepli Pamuklu Klasik Yaka Uzun Kollu Fermuarlı Gabardin Gömlek",
+   "sku": "8684969448688",
+   "base_code": "7WAM60003NW",
+   "price": "2499.99",
+   "retail_price": "2499.99",
+   "in_stock": false,
+   "absolute_url": "/cepli-pamuklu-klasik-yaka-uzun-kollu-fermuarli-gabardin-gomlek-kahve-4155003-2/",
+   "listing_code": "532",
+   "discount_ratio": 0.0
+  },
+  {
+   "pk": 1615481,
+   "name": "Regular Fit Pamuklu Uzun Kollu Klasik Yaka Gömlek",
+   "sku": "8684969448275",
+   "base_code": "7WAM60001IW",
+   "price": "1499.99",
+   "retail_price": "1499.99",
+   "in_stock": false,
+   "absolute_url": "/regular-fit-pamuklu-uzun-kollu-klasik-yaka-gomlek-kahve-4155000/",
+   "listing_code": "532",
+   "discount_ratio": 0.0
+  },
+  {
+   "pk": 1572883,
+   "name": "Regular Fit Uzun Kollu Yarım İtalyan Yaka Gömlek",
+   "sku": "8684969452036",
+   "base_code": "7WAM60033HW",
+   "price": "1199.99",
+   "retail_price": "1199.99",
+   "in_stock": true,
+   "absolute_url": "/regular-fit-uzun-kollu-yarim-italyan-yaka-gomlek-lacivert-4155958-1/",
+   "listing_code": "704",
+   "discount_ratio": 0.0
+  }
+ ],
+ "category": {
+  "pk": 564,
+  "name": "Gömlek",
+  "absolute_url": "/erkek-gomlek/"
+ }
+}

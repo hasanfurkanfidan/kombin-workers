@@ -1,0 +1,24 @@
+
+User-agent: *
+
+Allow: /
+
+
+
+Disallow: /tr-tr/login*
+
+Disallow: /tr-tr/account*
+
+Disallow: /tr-tr/checkout*
+
+Disallow: /tr-tr/favoriler
+
+Disallow: /tr-tr/return-items*
+
+Disallow: /tr-tr/track-order*
+
+Disallow: /tr-tr/arama*
+
+
+
+Sitemap: https://www.jackjones.com.tr/feeds/tr-tr/sitemap_index.xml

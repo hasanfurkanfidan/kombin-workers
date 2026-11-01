@@ -1,0 +1,255 @@
+{
+ "in_stock": true,
+ "product": {
+  "pk": 1414217,
+  "name": "Kapaklı Cep Detaylı Klasik Yaka Kolsuz Saten Gömlek",
+  "sku": "8684758856069",
+  "base_code": "5SAK60396UW",
+  "attributes": {
+   "swatch": "products/2025/07/22/3081991/a8730515-6de4-4d7b-beff-f0e7f45de5e8.jpg",
+   "is_approved": "yes",
+   "closed_product": "118",
+   "filterable_boy": "Standart",
+   "filterable_fit": "Regular",
+   "namshi_occasion": "Work",
+   "filterable_color": "Gri",
+   "integration_gtip": "620640000000",
+   "morhipo_cinsiyet": "KADIN",
+   "morhipo_kategori": "Gömlek",
+   "filterable_gender": "Kadın",
+   "integration_beden": "40",
+   "namshi_basic_type": "Short Sleeve",
+   "variantable_color": "Gri",
+   "integration_cep_id": "P010",
+   "filterable_category": "Gömlek",
+   "filterable_cinsiyet": "Kadın",
+   "filterable_kategori": "Gömlek",
+   "filterable_kol_boyu": "Kolsuz",
+   "filterable_kol_tipi": "Kolsuz",
+   "integration_size_id": "40",
+   "filterable_yaka_tipi": "Gömlek Yaka",
+   "integration_color_id": "031",
+   "filterable_kumas_tipi": "Saten görünümlü",
+   "integration_season_id": "SS 25",
+   "integration_size_desc": "40",
+   "filterable_stil_siluet": "Klasik",
+   "integration_color_desc": "031",
+   "integration_kumasadi_id": "K0150",
+   "integration_season_desc": "SS 25",
+   "integration_dis_taban_id": "PERR",
+   "integration_urun_detayi_id": "D0074",
+   "integration_referans_kodu_id": "5SAK60396UW",
+   "integration_country_of_origin_id": "TR",
+   "integration_country_of_origin_desc": "Turkey",
+   "urun_aciklama": "<p><p>Kolsuz saten gömlek, klasik tasarımı ve zarif yapısıyla dikkat çekiyor. Saten kumaşın kaliteli dokusu gün boyu rahatlık sağlarken, kolsuz tasarımı sayesinde sıcak havalar için ideal bir seçenek sunuyor. Düğmeli ön kısmı ve kapaklı cepleriyle pratik bir kullanım imkanı tanıyor. Klasik yaka detayı gömleğin şıklığını tamamlıyor, hem ofis hem de günlük kullanım için mükemmel bir uyum sağlıyor.</p></p>\n\n<strong>Stil Önerisi</strong>\n<p><p>Kolsuz saten gömleği kumaş pantolon ve stiletto ayakkabılarla kombinleyerek şık bir ofis görünümü elde edebilirsiniz. Günlük kullanım için ise denim pantolon ve sandaletlerle sportif ve rahat bir tarz yaratabilirsiniz. Minimal takılarla stilinizi tamamlanarak görünümünüze zarif bir dokunuş katabilirsiniz.</p></p>\n\n<strong>Ürün Özellikleri</strong>\n<p><p>Kol Tipi: Kolsuz<br>Yaka Tipi: Klasik Yaka<br>Detay: Kapaklı Cepli, Düğmeli<br>Fit: Regular<br>Kullanım Alanı: Günlük Giyim, Ofis Giyim, Özel Günler</p></p>\n\n<p><p>Koton ile zarif ve modern bir stil yaratın. Koton kadın gömlek koleksiyonunu keşfederek şıklığınızı artırın!</p></p>\n\n<p></p>\n\n<p></p>",
+   "integration_cep": "Kapaklı Çift Cep",
+   "integration_mensei": "Türkiye",
+   "integration_dis_taban": "KTNDEL",
+   "integration_urun_cinsi": "CARDIGANS",
+   "integration_size_charts": "Boy:63.0;Omuz:38.5;Göğüs:54.0",
+   "integration_urun_detayi": "Detaysız",
+   "integration_kumasadi_desc": "Saten",
+   "integration_referans_kodu": "5SAK60396UW",
+   "integration_ana_kumas_desc": "%100 POLİESTER",
+   "integration_koton_sku_code": "5SAK60396UW03140",
+   "integration_seo_product_option_code": "4085984",
+   "integration_product_color_theme_code": "ESSENTIAL",
+   "integration_product_color_theme_desc": "ESSENTIAL"
+  },
+  "attribute_set": 2,
+  "extra_attributes": {},
+  "productimage_set": [
+   {
+    "image": "https://ktnimg2.mncdn.com/products/2025/07/22/3081991/cba0f554-90ce-4687-b4c8-7a0bc0ef0e86.jpg",
+    "order": 1,
+    "status": "active"
+   },
+   {
+    "image": "https://ktnimg2.mncdn.com/products/2025/07/22/3081991/3baed80a-aa1e-4ee7-9986-88d9eb93dbc4.jpg",
+    "order": 2,
+    "status": "active"
+   },
+   {
+    "image": "https://ktnimg2.mncdn.com/products/2025/07/22/3081991/521e7921-10fc-4cf5-885e-596149619c15.jpg",
+    "order": 3,
+    "status": "active"
+   },
+   {
+    "image": "https://ktnimg2.mncdn.com/products/2025/07/22/3081991/159eed9a-ccbc-4ae1-b26e-42791eac589e.jpg",
+    "order": 4,
+    "status": "active"
+   },
+   {
+    "image": "https://ktnimg2.mncdn.com/products/2025/07/22/3081991/eb7687dd-6d24-4f54-9e32-b897b4908362.jpg",
+    "order": 5,
+    "status": "active"
+   }
+  ],
+  "price": "899.99",
+  "in_stock": true,
+  "currency_type": "try",
+  "retail_price": "899.99",
+  "unit_type": "qty",
+  "tax_rate": "10.00",
+  "absolute_url": "/product/1414217/",
+  "productvideo_set": [],
+  "product_type": "0",
+  "price_type": "default",
+  "form_schema": null,
+  "is_ready_to_basket": false,
+  "stock": 1,
+  "data_source": null,
+  "created_date": "2025-07-10T21:22:57.768203Z",
+  "modified_date": "2026-10-20T15:57:18.203185Z",
+  "is_listable": false,
+  "listing_code": "031",
+  "review_stats": {
+   "review_count": 0,
+   "review_average": null
+  }
+ },
+ "variants": [
+  {
+   "attribute_key": "integration_color_desc",
+   "attribute_name": "Renk",
+   "options": [
+    {
+     "is_selected": true,
+     "is_selectable": true,
+     "is_selectable_without_stock": true,
+     "in_stock": false,
+     "order": "31",
+     "label": "GRİ",
+     "value": "031",
+     "product": {
+      "pk": 1414215,
+      "sku": "8684758856038",
+      "stock": 0,
+      "in_stock": false,
+      "price": "899.99"
+     }
+    },
+    {
+     "is_selected": false,
+     "is_selectable": true,
+     "is_selectable_without_stock": true,
+     "in_stock": false,
+     "order": "565",
+     "label": "VİZON",
+     "value": "565",
+     "product": {
+      "pk": 1389171,
+      "sku": "8684756766360",
+      "stock": 0,
+      "in_stock": false,
+      "price": "899.99"
+     }
+    }
+   ]
+  },
+  {
+   "attribute_key": "integration_size_id",
+   "attribute_name": "Beden",
+   "options": [
+    {
+     "is_selected": false,
+     "is_selectable": false,
+     "is_selectable_without_stock": true,
+     "in_stock": false,
+     "order": "63",
+     "label": "34",
+     "value": "34",
+     "product": {
+      "pk": 1414215,
+      "sku": "8684758856038",
+      "stock": 0,
+      "in_stock": false,
+      "price": "899.99"
+     }
+    },
+    {
+     "is_selected": false,
+     "is_selectable": false,
+     "is_selectable_without_stock": true,
+     "in_stock": false,
+     "order": "65",
+     "label": "36",
+     "value": "36",
+     "product": {
+      "pk": 1414761,
+      "sku": "8684758856045",
+      "stock": 0,
+      "in_stock": false,
+      "price": "899.99"
+     }
+    },
+    {
+     "is_selected": false,
+     "is_selectable": false,
+     "is_selectable_without_stock": true,
+     "in_stock": false,
+     "order": "67",
+     "label": "38",
+     "value": "38",
+     "product": {
+      "pk": 1414214,
+      "sku": "8684758856052",
+      "stock": 0,
+      "in_stock": false,
+      "price": "899.99"
+     }
+    },
+    {
+     "is_selected": false,
+     "is_selectable": true,
+     "is_selectable_without_stock": true,
+     "in_stock": true,
+     "order": "69",
+     "label": "40",
+     "value": "40",
+     "product": {
+      "pk": 1414217,
+      "sku": "8684758856069",
+      "stock": 1,
+      "in_stock": true,
+      "price": "899.99"
+     }
+    },
+    {
+     "is_selected": false,
+     "is_selectable": false,
+     "is_selectable_without_stock": true,
+     "in_stock": false,
+     "order": "71",
+     "label": "42",
+     "value": "42",
+     "product": {
+      "pk": 1414762,
+      "sku": "8684758856076",
+      "stock": 0,
+      "in_stock": false,
+      "price": "899.99"
+     }
+    },
+    {
+     "is_selected": false,
+     "is_selectable": false,
+     "is_selectable_without_stock": true,
+     "in_stock": false,
+     "order": "73",
+     "label": "44",
+     "value": "44",
+     "product": {
+      "pk": 1414216,
+      "sku": "8684758856083",
+      "stock": 0,
+      "in_stock": false,
+      "price": "899.99"
+     }
+    }
+   ]
+  }
+ ],
+ "selected_variant": null,
+ "offers": []
+}

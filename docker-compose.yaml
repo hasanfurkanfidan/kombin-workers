@@ -1,0 +1,30 @@
+name: kombin-workers
+
+services:
+  worker:
+    build: .
+    image: kombin-workers:local
+    restart: unless-stopped
+    # KOMBIN_INTERNAL_KEY and BOT_CONTACT come from .env (copy .env.example). The file is optional so `docker compose
+    # config` works on a fresh checkout; the worker refuses to run without the key.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # .env says http://localhost:8081, which inside the container is the container itself. The backend's compose
+      # stack publishes 8081 on the host, so reach it through the host gateway.
+      KOMBIN_API_URL: ${KOMBIN_API_URL_IN_DOCKER:-http://host.docker.internal:8081}
+      KOMBIN_LOG_JSON: "1"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Default command is `kombin-workers daemon`: run-all every 6 hours, sweep once a day, jittered.
+    # One-off run:  docker compose run --rm worker run koton --limit 50
+    #
+    # Optional: reach the backend by service name instead of through the host. Uncomment this and the network below,
+    # then set KOMBIN_API_URL_IN_DOCKER=http://api:8080 (the backend compose project is called "kombin").
+    # networks: [backend]
+
+# networks:
+#   backend:
+#     external: true
+#     name: kombin_default
