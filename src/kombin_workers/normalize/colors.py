@@ -68,7 +68,7 @@ WORDS: dict[str, C] = {
     # Beige (ekru/krem/kum/vizon/taş are beiges)
     "bej": C.BEIGE, "beige": C.BEIGE, "ekru": C.BEIGE, "krem": C.BEIGE, "cream": C.BEIGE, "kum": C.BEIGE,
     "fildisi": C.BEIGE, "ivory": C.BEIGE, "vizon": C.BEIGE, "nude": C.BEIGE, "camel": C.BEIGE, "tas": C.BEIGE,
-    "biskuvi": C.BEIGE, "sand": C.BEIGE, "stone": C.BEIGE,
+    "biskuvi": C.BEIGE, "sand": C.BEIGE, "stone": C.BEIGE, "naturel": C.BEIGE, "natural": C.BEIGE,
     # Brown
     "kahverengi": C.BROWN, "kahve": C.BROWN, "brown": C.BROWN, "taba": C.BROWN, "cikolata": C.BROWN,
     "kestane": C.BROWN, "tarcin": C.BROWN, "chocolate": C.BROWN, "tan": C.BROWN, "bronz": C.BROWN, "toprak": C.BROWN,

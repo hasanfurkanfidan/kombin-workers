@@ -323,3 +323,9 @@ async def test_robots_check_can_be_switched_off_for_our_own_hosts(router: respx.
     async with PoliteClient(user_agent="t", requests_per_second=1000, respect_robots=False) as client:
         await client.get("https://a.test/p")
     assert page.call_count == 1
+
+
+def test_per_source_cap_defaults_to_400_and_can_be_configured(monkeypatch: pytest.MonkeyPatch) -> None:
+    assert Settings(_env_file=None).max_items_per_source == 400
+    monkeypatch.setenv("KOMBIN_MAX_ITEMS_PER_SOURCE", "25")
+    assert Settings(_env_file=None).max_items_per_source == 25

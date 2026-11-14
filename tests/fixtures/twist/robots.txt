@@ -1,0 +1,47 @@
+User-agent: *
+Disallow: /giris
+Disallow: /sepet/
+Disallow: /uyelik/
+Disallow: /mesaj/
+Disallow: /iadelerim/
+Disallow: /*brand
+Disallow: /*?sort*
+Disallow: /*ynu
+Disallow: /*?renk*
+Disallow: /*sezon-kodu-*
+Disallow: /*kategori-*
+Disallow: /*stk
+Disallow: /*?ind
+Disallow: /*beden=*
+Disallow: /*&sort
+Disallow: /*&ind
+Disallow: /*&kategori
+Disallow: /*&page=
+Disallow: /*urun/siyah-nakisli-askili-elbise
+Disallow: /*?page=*
+Disallow: /Page/Get*
+Disallow: /Widget/Get*
+
+Disallow: /u/info
+Disallow: /u/*
+Disallow: /c/cart-summary
+Disallow: *sezon*
+Disallow: *cinsiyet*
+Disallow: *urun-cinsi*
+Disallow: *season*
+Disallow: *gender*
+Disallow: *model-name*
+Disallow: /*?beden=
+Disallow: /*?size=
+Disallow: /*?renk=
+Disallow: /*?color=
+Disallow: /c/shipping-and-payment*
+
+User-agent: Storebot-Google
+Allow: /
+
+User-agent: Diffbot
+Disallow: /
+
+
+Sitemap: https://www.twist.com.tr/sitemap.xml

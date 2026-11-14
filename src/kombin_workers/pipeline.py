@@ -33,6 +33,9 @@ class RunSummary:
     updated: int = 0
     batches: int = 0
     backend_errors: Counter[str] = field(default_factory=Counter)
+    normalized_by_category: Counter[str] = field(default_factory=Counter)
+    upserted_by_category: Counter[str] = field(default_factory=Counter)
+    upserted_by_audience: Counter[str] = field(default_factory=Counter)
     blocked: str | None = None
     aborted: str | None = None
     duration_seconds: float = 0.0
@@ -48,6 +51,9 @@ class RunSummary:
             "failed": dict(self.failed),
             "upserted": {"created": self.created, "updated": self.updated, "batches": self.batches},
             "backendErrors": dict(self.backend_errors),
+            "normalizedByCategory": dict(sorted(self.normalized_by_category.items())),
+            "upsertedByCategory": dict(sorted(self.upserted_by_category.items())),
+            "upsertedByAudience": dict(sorted(self.upserted_by_audience.items())),
             "blocked": self.blocked,
             "aborted": self.aborted,
             "durationSeconds": round(self.duration_seconds, 1),
@@ -66,6 +72,8 @@ class RunSummary:
             f"fetch failures:  {counts(self.failed)}",
             f"upserted:        created={self.created} updated={self.updated} in {self.batches} batch(es)",
             f"backend errors:  {counts(self.backend_errors)}",
+            f"by category:     {counts(self.upserted_by_category if self.batches else self.normalized_by_category)}",
+            f"by audience:     {counts(self.upserted_by_audience)}",
             f"duration:        {self.duration_seconds:.1f}s",
         ]
         if self.blocked:
@@ -115,13 +123,19 @@ async def run_source(
     async def flush() -> None:
         if backend is None or not batch:
             return
-        response = await backend.upsert(source.seller_slug, list(batch))
+        sent = list(batch)
+        response = await backend.upsert(source.seller_slug, sent)
         batch.clear()
         summary.created += response.created
         summary.updated += response.updated
         summary.batches += 1
+        rejected = {error.index for error in response.errors}
         for error in response.errors:
             summary.backend_errors[error.error_code] += 1
+        for index, offer in enumerate(sent):
+            if index not in rejected:
+                summary.upserted_by_category[offer.product.category_slug] += 1
+                summary.upserted_by_audience[offer.product.audience.value] += 1
 
     async def settle(done: set[asyncio.Task[NormalizedOffer | None]]) -> None:
         for task in done:
@@ -133,6 +147,7 @@ async def run_source(
                 continue
             seen_ids.add(item.external_id)
             summary.normalized += 1
+            summary.normalized_by_category[item.product.category_slug] += 1
             if collect:
                 summary.items.append(item)
             batch.append(item)

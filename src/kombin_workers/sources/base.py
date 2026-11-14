@@ -4,12 +4,14 @@ from __future__ import annotations
 
 from collections.abc import AsyncIterator, Awaitable, Callable, Mapping, Sequence
 from dataclasses import dataclass, field
+from itertools import zip_longest
 from typing import Any, ClassVar, Protocol, runtime_checkable
 
 import structlog
 
 from kombin_workers.http import FetchError, PoliteClient, RobotsBlocked, SourceAborted
-from kombin_workers.models import NormalizedItem, SellerKind, SellerRegistration
+from kombin_workers.models import Audience, NormalizedItem, SellerKind, SellerRegistration
+from kombin_workers.normalize.audience import map_audience
 
 log = structlog.get_logger(__name__)
 
@@ -20,6 +22,16 @@ class SkipItem(Exception):
     def __init__(self, reason: str) -> None:
         super().__init__(reason)
         self.reason = reason
+
+
+def adult_audience(*texts: str | None) -> Audience:
+    """Women / Men / Unisex from a source's gender labels. Kids' items and unreadable labels are skipped, never guessed."""
+    audience = map_audience(*texts)
+    if audience is None:
+        raise SkipItem("unknown-audience")
+    if audience is Audience.KIDS:
+        raise SkipItem("kids")
+    return audience
 
 
 @dataclass(frozen=True)
@@ -113,7 +125,10 @@ class BaseSource:
     ) -> AsyncIterator[ListingRef]:
         """Page 1 of every listing, then page 2 of every listing, ... up to `max_pages`.
 
-        Going page-major keeps categories balanced when a run is cut short by `--limit` or the per-source cap.
+        Going page-major keeps categories balanced when a run is cut short by `--limit` or the per-source cap, and within
+        one round the products are dealt out one listing at a time (first of listing A, first of listing B, ...) rather
+        than listing by listing: a cap that falls inside a round then takes an even share of every category, and of
+        both audiences when the caller alternates women's and men's listings.
         A listing that fails (404, robots) is dropped; if robots blocks every listing the source is blocked.
         """
         active = list(listings)
@@ -122,6 +137,7 @@ class BaseSource:
         robots_blocked: RobotsBlocked | None = None
         for page_number in range(1, self.max_pages + 1):
             still_active: list[Listing] = []
+            round_refs: list[list[ListingRef]] = []
             for listing in active:
                 try:
                     page = await read_page(listing, page_number)
@@ -134,14 +150,16 @@ class BaseSource:
                 except FetchError as exc:
                     log.warning("listing_failed", source=self.slug, listing=listing.path, page=page_number, error=str(exc))
                     continue
-                for ref in page.refs:
-                    if ref.key in seen:
+                round_refs.append(page.refs)
+                if page.has_more:
+                    still_active.append(listing)
+            for refs in zip_longest(*round_refs):
+                for ref in refs:
+                    if ref is None or ref.key in seen:
                         continue
                     seen.add(ref.key)
                     yielded += 1
                     yield ref
-                if page.has_more:
-                    still_active.append(listing)
             active = still_active
             if not active:
                 break

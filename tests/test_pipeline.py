@@ -14,7 +14,7 @@ from structlog.testing import capture_logs
 
 from kombin_workers.backend import BackendClient
 from kombin_workers.http import FetchError, PoliteClient, RobotsBlocked, SourceAborted
-from kombin_workers.models import NormalizedOffer
+from kombin_workers.models import Audience, NormalizedOffer
 from kombin_workers.pipeline import run_source
 from kombin_workers.sources.base import BaseSource, ListingRef, SkipItem
 from tests.conftest import make_offer
@@ -284,3 +284,22 @@ async def test_pipeline_with_a_real_source_over_http(router: respx.MockRouter, b
     assert post_body["sellerSlug"] == "derimod-store"
     assert summary.normalized == len(post_body["items"]) == 5
     assert "WM790004DN-5637145360" in {item["product"]["modelCode"] for item in post_body["items"]}
+
+
+async def test_summary_counts_what_the_backend_accepted_per_category_and_audience(
+    router: respx.MockRouter, backend_client: BackendClient
+) -> None:
+    async def behaviour(n: int) -> NormalizedOffer | None:
+        product = make_offer(n).product.model_copy(
+            update={"category_slug": "ust-giyim/tisort" if n % 2 == 0 else "alt-giyim/jean", "audience": Audience.WOMEN if n < 2 else Audience.MEN}
+        )
+        return make_offer(n, product=product)
+
+    Backend(router, errors_for=lambda external_id: "rejected" if external_id == "ext-3" else None)
+    summary = await run_source(FakeSource(6, behaviour), backend=backend_client, concurrency=1)
+    assert summary.normalized_by_category == {"ust-giyim/tisort": 3, "alt-giyim/jean": 3}
+    assert summary.upserted_by_category == {"ust-giyim/tisort": 3, "alt-giyim/jean": 2}  # ext-3 (a jean) was rejected
+    assert summary.upserted_by_audience == {"Women": 2, "Men": 3}
+    wire = summary.to_dict()
+    assert wire["upsertedByCategory"] == {"alt-giyim/jean": 2, "ust-giyim/tisort": 3}
+    assert "by category:" in summary.format() and "by audience:" in summary.format()

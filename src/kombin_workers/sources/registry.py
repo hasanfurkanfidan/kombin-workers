@@ -4,12 +4,17 @@ from __future__ import annotations
 
 from kombin_workers.http import PoliteClient
 from kombin_workers.sources.base import BaseSource
+from kombin_workers.sources.colins import ColinsSource
 from kombin_workers.sources.derimod import DerimodSource
+from kombin_workers.sources.hotic import HoticSource
 from kombin_workers.sources.jackjones import JackJonesSource
 from kombin_workers.sources.koton import KotonSource
+from kombin_workers.sources.network import NetworkSource
+from kombin_workers.sources.twist import TwistSource
 
 SOURCE_CLASSES: dict[str, type[BaseSource]] = {
-    source.slug: source for source in (DerimodSource, JackJonesSource, KotonSource)
+    source.slug: source
+    for source in (ColinsSource, DerimodSource, HoticSource, JackJonesSource, KotonSource, NetworkSource, TwistSource)
 }
 
 

@@ -63,7 +63,7 @@ RULES: tuple[tuple[tuple[str, ...], str], ...] = (
     (("jean ceket", "kot ceket", "denim ceket"), "dis-giyim/ceket"),
     (("jean", "kot pantolon", "denim pantolon", "kot$"), "alt-giyim/jean"),
     (("mont$", "montlar", "sisme", "puffer", "parka", "anorak", "kaban mont"), "dis-giyim/mont"),
-    (("kaban", "palto", "trenckot", "trench", "pardesu", "overcoat"), "dis-giyim/kaban"),
+    (("kaban", "palto", "manto", "trenckot", "trench", "pardesu", "pardosu", "overcoat"), "dis-giyim/kaban"),
     (("ceket", "bomber", "biker", "harrington", "jacket"), "dis-giyim/ceket"),
     (("kazak", "triko", "hirka", "pullover", "sweater", "cardigan", "boguzlu", "yaka kazak"), "ust-giyim/triko"),
     (("tisort", "t-shirt", "tshirt", "t shirt", "polo$", "polo yaka", "tee$"), "ust-giyim/tisort"),

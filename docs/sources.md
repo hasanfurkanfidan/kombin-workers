@@ -1,6 +1,6 @@
 # Sources
 
-What was found while investigating each candidate (2026-11-01), what we use, and what we left alone. Every source goes
+What was found while investigating each candidate (first three: 2026-11-01; task W2 candidates: 2026-11-14), what we use, and what we left alone. Every source goes
 through `PoliteClient`: 1 request/second per host, exponential backoff on 429/5xx, `Retry-After` honoured, robots.txt
 checked before every URL, hard stop after 20 consecutive failures. Nothing here needs a login, a CAPTCHA solver, a
 proxy or a headless browser.
@@ -62,16 +62,144 @@ backend would be cleared by the next run.
 | Category | `ediCategory` / `ediSubCategory` ("Tişört") and the title |
 | Rate used | 1 request/second; pages are ≈ 0.5–1 MB each, so a 1500-product run takes ≈ 30 minutes |
 
-## Looked at and not used
+### Network – `network` → seller `network-store`
+
+| | |
+|---|---|
+| Site | https://www.network.com.tr (premium casual, women and men; Ay Marka Mağazacılık) |
+| Platform | server-rendered storefront. Each listing page embeds the **complete record of its 24 products** as JSON (`window.defaultProductList["N"] = {...{"ID":223002,...}}`, repeated in a second script block) |
+| robots.txt | disallows `/product/` (and `/en/product/`), `/search`, `/api/`, `/cart/`, `*customer*`, `*login*` and the filter / sort query strings (`*filterIDList=*`, `*orderOption=*`, `*minPrice=*`, ...). Product pages are `/<slug>-p-<id>` and category pages `/<slug>-<id>`: neither is under a disallowed path. We only add `?page=N` |
+| Discovery | 23 category pages, women's and men's alternating (shirt, t-shirt, knitwear, trousers, jeans, skirt, jacket, coat, boots, loafers, sneakers); `?page=N`, 24 products a page, `<link rel="next">` says whether there is another page |
+| Fetch | none: the listing record is the product record |
+| Price / crossed-out | `ActualPriceToShowOnScreen`; crossed-out = `StrikeThroughPriceToShowOnScreen` when higher. The record also has `ProductPromotion.PromotedPrice` (a basket-only "Sepette" price) – **ignored**, it is not the shelf price |
+| Stock / sizes | `VariantWithStockList[].StockExists`; `HasLowStock` → `LowStock` |
+| externalId / modelCode | record `ID` / `ExternalSystemCode`, e.g. `1099332-536` (style – colour) |
+| Audience / category | `GenderAttribute`; the `good-type-description` attribute ("Dış Gömlek") first, then the last part of `CategoryLevelDisplayName` ("Mont"). Network files overshirts under Mont; the garment type wins |
+| Colour | `color-group` attribute ("Kahverengi"), then the colour name ("Tütün") |
+| Images | `MediaList[].ProductMediaFileDOList[].ImageResizePath` – a template with `{width}`/`{height}`; filled with `1000` and `-` (the form the site's own cards use). First 6 |
+| Rate used | 1 request/second, one request per 24 products. Pages are big (≈ 4.7 MB for 24 products) but nothing else is fetched |
+| Gotcha | a product has three copies of its attribute list in the record; the parser reads `NonVariantAttributeList` only |
+
+### Hotiç – `hotic` → seller `hotic-store`
+
+| | |
+|---|---|
+| Site | https://www.hotic.com.tr (footwear and bags, women and men) |
+| Platform | Next.js. Every listing page's `__NEXT_DATA__` holds `productList.products.data`: the **complete record of 20 products** (variants with stock quantity, prices, pictures, colour, category breadcrumb) |
+| robots.txt | `Allow: /`; disallows account / basket paths and the query strings `*category`, `*ordering`, `*searchValue`, `*defaultMinPrice`, `*defaultMaxPrice`, `*script*`. We only add `?pageIndex=N` |
+| Discovery | 14 category pages, women's and men's alternating (sneakers, loafers, oxford/classic, boots, boots/chelsea, shoulder / messenger / backpack bags, belt). `?pageIndex=N` is **zero-based** (`?page=2` is ignored by the site and returns page 1 again); `products.hasNextPage` ends the loop. Sandals, slippers, flats, heels and wallets are left out: no category for them |
+| Fetch | none: the listing record is the product record |
+| Price / crossed-out | `price.newPrice`; `price.oldPrice` when higher. No reduced product was on the pages read, so the crossed-out path is covered by a unit test on edited data |
+| Stock / sizes | `variants[]` with `quantity > 0` → sizes; ≤ 3 pairs in total → `LowStock`. Bags are one size (`STD`) |
+| externalId / modelCode | `erpCode` / style + colour: `02AYH333890A100` → `02AYH33389-0A100` (the last five characters are the colour code: `0A100` black, `0A480` brown) |
+| Audience / category | the category names of the breadcrumb ("Erkek Loafer Ayakkabı") and the product name |
+| Colour | the `isSelected` entry of `relatedVariants` ("SİYAH") |
+| Rate used | 1 request/second, one request per 20 products (≈ 90 KB each) |
+
+### Twist – `twist` → seller `twist-store`
+
+| | |
+|---|---|
+| Site | https://www.twist.com.tr (women's fashion, İpekyol Group). Womenswear only |
+| Platform | Next.js (`__NEXT_DATA__` on category and product pages) |
+| robots.txt | disallows `/*?page=*` and `/*&page=`, the size / colour / sort filters (`/*?beden=*`, `/*?renk*`, `/*?sort*`), `*sezon*`, `*cinsiyet*`, `*gender*`, `/u/*`, `/Page/Get*`, `/Widget/Get*` and one product (`/*urun/siyah-nakisli-askili-elbise`). Category pages and `/urun/<slug>` are allowed |
+| Discovery | 10 category pages. **Pagination is disallowed, so every category is read once: its first page, 24 products** (`sources/twist.py` never builds a `?page=` URL; `tests/test_sources_w2.py` asserts it). The sitemap (`/sitemap.xml`, listed in robots.txt) would be the way to reach the rest later. Dresses, blouses, sweatshirts and vests are left out: no category |
+| Fetch | `/urun/<routePath>`: `__NEXT_DATA__.props.pageProps.data.response.product` has the barcodes (size labels) with `stocksByBarcode`, prices, `documents` (images) and attributes; `application/ld+json` `Product` gives the fabric composition |
+| Price / crossed-out | `salesPrice`; `basePrice` when higher. No reduced product was on the pages read (unit test on edited data) |
+| Stock / sizes | `barcodes[].stockTypeValues[0].name` where `stocksByBarcode[barcode id] > 0`; the site reports 0/1 per size, so ≤ 3 sizes in stock → `LowStock` |
+| externalId / modelCode | `sku` (`TW6260025124003`) / `TW6260025124-003`: the sku without its last three digits, a dash, `attr_ColorCode` (`003` natural, `015` navy, `074` brown, ...) |
+| Audience / category | `gender` attribute ("Kadın"); `categories[0].name` ("Gömlek"), `attr_UrunAltGrubu`, then the name |
+| Images | `documents[]` of type Image on `https://cdn.twist.com.tr/mnresize/2400/-` + `filePath` (the same URLs as in the ld+json) |
+| Gotcha | product names are in capitals; `title_case_tr` turns them into "Ekose Desen Yakası ..." |
+| Rate used | 1 request/second: 1 per category page + 1 per product (≈ 30 KB transferred each) |
+
+### Colin's – `colins` → seller `colins-store`
+
+| | |
+|---|---|
+| Site | https://www.colins.com.tr (jeans and casual wear, women and men) |
+| Platform | server-rendered ASP.NET storefront; no JSON endpoint, no embedded state. Each listing card carries `data-ga` (analytics record: colour variant, price) and `data-variants` (JSON: url, images, size ids/names, price, `oldPrice`) as HTML attributes; product pages have `application/ld+json` `Product` |
+| robots.txt | disallows `/urunler/`, `/markalar/`, `/hedefler/`, `/sporlar/`, `/kampanyalar/`, `/cart`, `/checkout`, the account paths, and any URL containing `search`, `price`, `term`, `orderby`, `returnUrl`, `subscribe`. `/c/<category>-<id>` and `/p/<slug>-<id>` are allowed; we add `?pagenumber=N` |
+| Discovery | 23 category pages, women's and men's alternating; `?pagenumber=N`, 48 cards a page; a `pagenumber=<next>` link says whether there is another page |
+| Fetch | the product page (≈ 1 MB), for what a card does not have: `sku`, the in-stock sizes and the breadcrumb |
+| Price / crossed-out | ld+json `offers.price` (dot decimal); crossed-out = the card's `oldPrice` ("1.499,90 TL", Turkish format) when higher |
+| Stock / sizes | `<option class="have-stock">` of the size select. **A page with no in-stock size option is sold out**: it has no size select at all. The ld+json `availability` says `InStock` on sold-out pages too, and the add-to-cart button is disabled until a size is chosen, so neither is used |
+| externalId / modelCode | the card / product id (the URL ends in `-<id>`) / `<style>-<colour>` from the sku `CL1076502_Q1.V1_PGR`: `CL1076502-PGR` (the colour is a three-letter abbreviation, or `DN45196` for denim washes) |
+| Audience / category | the first breadcrumb part ("ERKEK GİYİM") and the name ("... Erkek Yeşil Uzun Kol Gömlek"); category from the sub-category crumb ("ERKEK UZUN KOL GÖMLEK"), then the name. Some pages (jeans) have no sub-category crumb; the name decides |
+| Colour | `data-ga.variant` of the card ("Yeşil") |
+| Images | ld+json `image` (6 full-size URLs) |
+| Rate used | 1 request/second: 1 per category page + 1 per product. 400 products ≈ 8 minutes |
+
+## Decisions for the task W2 candidates (2026-11-14)
+
+For every candidate: `robots.txt` was read first, then the terms page (member agreement / terms of use) the footer links to,
+then (only if both allow it) one category page and one product page. "Allowed" means robots.txt allows category and product
+pages for `KombinBot` **and** the terms contain no clause against automated access. Nothing was fetched from a site
+that refused us.
+
+| Candidate | Decision | What decided it |
+|---|---|---|
+| **Mavi** | allowed, **not implemented** | robots.txt (`User-agent: *`): `Disallow: /search/`, `/login`, `/checkout`, `/cart`, `/my-account`, `/*?q=*`, `/*?_gl=*`, `/*?f=*`; category (`/erkek/jean/c/2`) and product (`/<slug>/p/<sku>`) pages are allowed. The member agreement (`/uyelik-sozlesmesi`) only forbids overloading the servers with automatic programs. Listing pages carry a complete JSON-LD `ItemList` of `Product`s (24 a page, `?page=N`: name, url, images, colour, material, sku, price, availability, category), **but sizes with stock and the reduced price are only in the Angular transfer state** (`ng-state` → `__spaTransferState__`, a schema-compressed `values`/`schemas` array with `~<base36>` references; no `Product` JSON-LD on product pages). The contract needs sizes with stock, so a Mavi source without them was not written. Follow-up: decode that state (or take Mavi from an affiliate feed) |
+| **LC Waikiki** | **disallowed (terms)** | robots.txt allows `/` (it disallows only `/marka/lc-waikiki*`, `/*marka=lc-waikiki*`, `/magaza/`, `/outlet/` and filter parameters), **but the terms of use (`/statik/kullanimkosullari`) forbid, without LC Waikiki's prior written permission, using automatic programs, web crawlers, robots, data mining / data crawling or "screen scraping" software on the site to take its content**. No module |
+| **DeFacto** | **disallowed (robots unreadable)** | `https://www.defacto.com.tr/robots.txt` → `HTTP 403 Access Denied` (Akamai edge error page) for `KombinBot`, again on 2026-11-14 (first seen 2026-11-01). Rules we cannot read are treated as `Disallow: /`; we do not retry with another identity. No module |
+| **Colin's** | **allowed, implemented** | robots.txt: `Disallow: /urunler/`, `/markalar/`, `/hedefler/`, `/sporlar/`, `/kampanyalar/`, `/cart`, `/checkout`, `*search*`, `*price*`, `*term*`, `*orderby*` (full list in `tests/fixtures/colins/robots.txt`); `/c/…` and `/p/…` are not covered. The pages the footer links to (`/t/politikalarimiz`, `/t/uyelik-islemleri`, `/t/gizlilikveguvenlik`) have no clause on automated access; there is no separate terms-of-use page |
+| **Network** | **allowed, implemented** | robots.txt: `Disallow: /product/`, `/en/product/`, `/search`, `/api/`, `/cart/`, `*customer*`, `*login*`, filter and sort query strings. That `/product/` rule does **not** cover the product pages (`/<slug>-p-<id>`) nor the category pages (`/<slug>-<id>`). Terms of use (`/content/kullanim-sartlari`): a general copyright clause (no copying or republishing the site's material, code and software included) and no clause on automated access. We store facts (name, price, sizes, availability), the product URL and image **URLs**, never the images |
+| **İpekyol** | **disallowed (robots unreadable)** | `https://www.ipekyol.com.tr/robots.txt` → `HTTP 418` with a "CloudWAF – Erişiminiz Engellendi!" block page. Unreadable rules count as `Disallow: /`. Same group as Twist, but Twist runs on its own host with readable rules. No module |
+| **Twist** | **allowed, implemented (first page of each category)** | robots.txt: `Disallow: /*?page=*`, `/*&page=`, `/*?beden=*`, `/*?renk*`, `/*?sort*`, `*sezon*`, `*cinsiyet*`, `*gender*`, `/u/*`, `/Page/Get*`, `/Widget/Get*`, `/*urun/siyah-nakisli-askili-elbise`; category pages and `/urun/<slug>` are allowed. Because paging is disallowed we read each category's first page only. The footer has no terms-of-use page (only returns, contact, cookie policy, BDDK information) |
+| **Hotiç** | **allowed, implemented** | robots.txt: `Allow: /`, `Disallow: *category`, `*ordering`, `*searchValue`, `*defaultMinPrice`, `*defaultMaxPrice`, `*script*`, account and basket paths. `?pageIndex=N` is not covered. The footer's policy pages (sales policy, distance-sales agreement, KVKK) have no clause on automated access; there is no terms-of-use page |
+| **Flo** | **disallowed (terms)** | robots.txt allows `/` for `*` (filters disallowed) – and lists AI crawlers (ClaudeBot, anthropic-ai, GPTBot-style names, Bytespider, ...) under `Disallow: /`; `KombinBot` is not named, so robots.txt alone would not stop us. **The member agreement (`/uyelik-sozlesmesi`) forbids, without Flo's prior written permission, automatic programs, robots, web crawlers, data mining / crawling and "screen scraping" software on the platform.** No module |
+
+Marketplaces (Trendyol, Hepsiburada, Amazon) were not looked at: they come through affiliate feeds later.
+
+## Looked at and not used (earlier tasks)
 
 | Candidate | Finding |
 |---|---|
-| **Defacto** | `robots.txt` itself answers `403 Access Denied` (Akamai) to a plain request. Treated as **blocked**: we cannot read the rules and the edge refuses us. No module written |
 | **Boyner** | robots.txt has `Disallow: /product/` – the product detail pages. **Blocked by robots**, no module written |
-| **Mavi** | robots.txt allows category pages (filters `?q=`, `?f=` are disallowed), but the site is an Angular app whose data is a compressed transfer-state array, product pages carry no `Product` JSON-LD and `/sitemap.xml` is 404. Not readable with plain HTTP in reasonable effort – revisit if an official feed appears |
 | **Vakko** | robots.txt allows product pages (`Allow: /`) and has a sitemap (21k products); product pages embed the full SAP Spartacus state (`cx-state`) with price, stock, sizes, brand. But the catalogue is mixed (home goods, other designer brands), pagination parameters are disallowed and discovery would have to be sitemap-only with a per-item brand filter. A good candidate for a later task |
-| **LC Waikiki** | robots.txt allows `/` but disallows its own brand pages (`/marka/lc-waikiki*`, `*marka=lc-waikiki*`); not investigated further |
 | **Pull&Bear, Beymen Club** | not investigated (Inditex-style bot protection expected for Pull&Bear; Beymen Club is not a standalone store). Nike, Adidas and Zara are excluded by the task |
+
+## First runs against the local backend (2026-11-14)
+
+`uv run kombin-workers run <slug>` with the defaults (cap 400, 1 request/second per host), against `http://localhost:8081`.
+Upserted = accepted by the backend (no per-item errors in any run). Fetch failures: none.
+
+| Source | Discovered | Upserted | Skipped | Women / Men | Duration |
+|---|---|---|---|---|---|
+| hotic | 400 | 400 | – | 213 / 187 | 34 s |
+| network | 400 | 398 (second run; see below) | unknown-category 2 | 212 / 186 | 25 s |
+| twist | 203 | 202 | unknown-category 1 | 202 / – | 214 s |
+| colins | 400 | 393 | unknown-audience 7 | 208 / 185 | 428 s |
+
+Per category (upserted):
+
+| Category | hotic | network | twist | colins |
+|---|---|---|---|---|
+| ust-giyim/tisort | | 42 | 23 | 60 |
+| ust-giyim/gomlek | | 46 | 24 | 58 |
+| ust-giyim/triko | | 45 | 35 | 64 |
+| ust-giyim/blazer | | | 7 | |
+| alt-giyim/pantolon | | 44 | 24 | 45 |
+| alt-giyim/jean | | 43 | 24 | 21 |
+| alt-giyim/etek | | 21 | 24 | 10 |
+| dis-giyim/mont | | 36 | | 40 |
+| dis-giyim/kaban | | 39 | | 9 |
+| dis-giyim/ceket | | 44 | 17 | 37 |
+| ayakkabi/sneaker | 81 | 13 | | |
+| ayakkabi/bot | 119 | 16 | | |
+| ayakkabi/loafer | 136 | 9 | | |
+| aksesuar/canta | 48 | | 24 | 13 |
+| aksesuar/kemer | 16 | | | 36 |
+
+Notes:
+- **Network, first run:** 396 upserted and 2 items rejected by our own model: two products have an image file name with a
+  space (`..._04 .jpg`). Spaces are now percent-encoded; the second run upserted those (created 2, updated 396).
+- **Twist** discovers only ~200: first page per category (24), because `?page=` is disallowed. The "dış giyim" page holds
+  jackets and blazers, no coats (`dis-giyim/mont` and `kaban` are empty for Twist).
+- **Colin's** 7 skipped items are unisex accessories whose name and breadcrumb carry no gender word.
+- **Shoe categories at Network** are small because the site's boot / loafer / sneaker pages hold only 9-16 products.
+- Colin's `kemer` and Twist/Hotiç `canta` counts are higher than the 400-product even split suggests because those
+  listings are the only ones in their category.
 
 ## Things learned that apply to every source
 
@@ -86,5 +214,13 @@ backend would be cleared by the next run.
 - **Categories we cannot file** (no slug in the backend): sweatshirts/hoodies, dresses, blouses, shorts, sandals,
   slippers, socks, wallets, ties, vests, heels. They are skipped and counted as `unknown-category`. Adding
   `ust-giyim/sweatshirt` to the backend would recover a large share of Koton and Jack & Jones.
-- **Per-run cap.** `--max-pages` (default 5) pages per category, interleaved page-major; a source also stops at 1500
-  discovered products (`pipeline.DEFAULT_MAX_ITEMS`).
+- **Per-run cap.** `--max-pages` (default 5) pages per category, read page-major; a source also stops after
+  `KOMBIN_MAX_ITEMS_PER_SOURCE` discovered products (default **400**; `Settings.max_items_per_source`).
+- **A capped run stays balanced.** `paged_discovery` reads page 1 of every listing, then deals the products out one
+  listing at a time (first of listing A, first of B, ...). The sources list women's and men's category pages alternately, so
+  400 products are an even share of every category and of both audiences, not the first few categories.
+- **Structured data first.** Network, Hotiç and Twist read JSON the site embeds for its own front end (`sources/embedded.py`:
+  `__NEXT_DATA__`, `application/ld+json`); Colin's reads the data attributes of its listing cards plus the product
+  page's ld+json. No CSS selectors for prices, sizes or stock.
+- **Stock signals that lie.** Colin's ld+json says `InStock` on sold-out pages; Network's `ProductPromotion.PromotedPrice` is
+  a basket-only price. Each source documents which field it trusts.

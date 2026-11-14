@@ -1,0 +1,164 @@
+{
+ "props": {
+  "pageProps": {
+   "productList": {
+    "products": {
+     "index": 0,
+     "size": 20,
+     "totalCount": 2,
+     "data": [
+      {
+       "variantId": 25601,
+       "productId": 4299,
+       "productName": "Kadın Süet Deri Siyah Cepli Tokalı Sırt Çantası",
+       "shortDescription": "",
+       "erpCode": "03CAH316410A100",
+       "sku": "03CAH316410A100STANDART",
+       "slug": "siyah-kadin-suet-deri-siyah-cepli-tokali-sirt-cantasi-03cah316410a100-p-25601",
+       "brandName": "HOTİÇ",
+       "brandSlug": "hotic",
+       "categories": [
+        {
+         "id": 995,
+         "name": "Çanta&Aksesuar",
+         "isVirtualCategory": false
+        },
+        {
+         "id": 996,
+         "name": "Kadın Çanta&Aksesuar",
+         "isVirtualCategory": false
+        },
+        {
+         "id": 999,
+         "name": "Kadın Sırt Çantası",
+         "isVirtualCategory": false
+        }
+       ],
+       "pictures": [
+        {
+         "id": 146470,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH316410A100-1-251111103746635.jpg",
+         "displayOrder": 1,
+         "mediaType": 1
+        },
+        {
+         "id": 146471,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH316410A100-2-251111103746687.jpg",
+         "displayOrder": 2,
+         "mediaType": 1
+        },
+        {
+         "id": 146472,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH316410A100-3-251111103746757.jpg",
+         "displayOrder": 3,
+         "mediaType": 1
+        }
+       ],
+       "price": {
+        "oldPrice": 9999,
+        "newPrice": 9999,
+        "currencyCode": "TRY"
+       },
+       "variants": [
+        {
+         "variantId": 25601,
+         "specName": "size",
+         "specValueName": "STANDART",
+         "quantity": 7
+        }
+       ],
+       "relatedVariants": [
+        {
+         "variantId": 25601,
+         "specValueName": "SİYAH",
+         "slug": "siyah-kadin-suet-deri-siyah-cepli-tokali-sirt-cantasi-03cah316410a100-p-25601",
+         "isSelected": true,
+         "hasStock": true
+        },
+        {
+         "variantId": 25845,
+         "specValueName": "KAHVERENGİ",
+         "slug": "kahverengi-kadin-suet-deri-kahverengi-cepli-tokali-sirt-cantasi-03cah316410a480-p-25845",
+         "isSelected": false,
+         "hasStock": null
+        }
+       ]
+      },
+      {
+       "variantId": 22212,
+       "productId": 3754,
+       "productName": "Kadın Gri Taşlı Sırt Çantası",
+       "shortDescription": "",
+       "erpCode": "03CAH309020A250",
+       "sku": "03CAH309020A250STANDART",
+       "slug": "gri-kadin-gri-tasli-sirt-cantasi-03cah309020a250-p-22212",
+       "brandName": "HOTİÇ",
+       "brandSlug": "hotic",
+       "categories": [
+        {
+         "id": 995,
+         "name": "Çanta&Aksesuar",
+         "isVirtualCategory": false
+        },
+        {
+         "id": 996,
+         "name": "Kadın Çanta&Aksesuar",
+         "isVirtualCategory": false
+        },
+        {
+         "id": 999,
+         "name": "Kadın Sırt Çantası",
+         "isVirtualCategory": false
+        }
+       ],
+       "pictures": [
+        {
+         "id": 126596,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH309020A250-1-250910070909116.jpg",
+         "displayOrder": 1,
+         "mediaType": 1
+        },
+        {
+         "id": 126597,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH309020A250-2-250910070909166.jpg",
+         "displayOrder": 2,
+         "mediaType": 1
+        },
+        {
+         "id": 126598,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH309020A250-3-250910070909251.jpg",
+         "displayOrder": 3,
+         "mediaType": 1
+        }
+       ],
+       "price": {
+        "oldPrice": 5499,
+        "newPrice": 5499,
+        "currencyCode": "TRY"
+       },
+       "variants": [
+        {
+         "variantId": 22212,
+         "specName": "size",
+         "specValueName": "STANDART",
+         "quantity": 82
+        }
+       ],
+       "relatedVariants": [
+        {
+         "variantId": 22212,
+         "specValueName": "GRİ",
+         "slug": "gri-kadin-gri-tasli-sirt-cantasi-03cah309020a250-p-22212",
+         "isSelected": true,
+         "hasStock": true
+        }
+       ]
+      }
+     ],
+     "hasNextPage": false,
+     "totalPages": 8
+    }
+   }
+  }
+ }
+}

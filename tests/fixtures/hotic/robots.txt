@@ -1,0 +1,42 @@
+User-agent: *
+Allow: /
+Disallow: /hesabim
+Disallow: /adreslerim
+Disallow: /siparislerim
+Disallow: /stok-bildirimlerim
+Disallow: /favori-listem
+Disallow: /fiyat-alarmi
+Disallow: /sifre-degistir
+Disallow: /sepetim
+Disallow: /checkout
+Disallow: /*ref=*
+Disallow: *script*
+Disallow: *Script*
+Disallow: *category
+Disallow: *defaultMinPrice
+Disallow: *defaultMaxPrice
+Disallow: *ordering
+Disallow: *searchValue
+
+sitemap: https://www.hotic.com.tr/sitemap.xml
+
+User-agent: EtaoSpider
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: CazoodleBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: dotbot/1.0
+Disallow: /
+
+User-agent: Gigabot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /

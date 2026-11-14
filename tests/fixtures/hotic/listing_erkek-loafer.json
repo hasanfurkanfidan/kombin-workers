@@ -1,0 +1,224 @@
+{
+ "props": {
+  "pageProps": {
+   "productList": {
+    "products": {
+     "index": 0,
+     "size": 20,
+     "totalCount": 154,
+     "data": [
+      {
+       "variantId": 38273,
+       "productId": 6402,
+       "productName": "Erkek Rugan Deri Siyah Kalın Tabanlı Klasik Loafer",
+       "shortDescription": "",
+       "erpCode": "02AYH333890A100",
+       "sku": "02AYH333890A10040",
+       "slug": "siyah-erkek-rugan-deri-siyah-kalin-tabanli-klasik-loafer-02ayh333890a100-p-38273",
+       "brandName": "HOTİÇ",
+       "brandSlug": "hotic",
+       "categories": [
+        {
+         "id": 981,
+         "name": "Erkek Ayakkabı",
+         "isVirtualCategory": false
+        },
+        {
+         "id": 982,
+         "name": "Erkek Tüm Ayakkabılar",
+         "isVirtualCategory": false
+        },
+        {
+         "id": 984,
+         "name": "Erkek Loafer Ayakkabı",
+         "isVirtualCategory": false
+        }
+       ],
+       "pictures": [
+        {
+         "id": 267723,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/02AYH333890A100-1-261023094013553.jpg",
+         "displayOrder": 1,
+         "mediaType": 1
+        },
+        {
+         "id": 267729,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/02AYH333890A100-2-261023094013671.jpg",
+         "displayOrder": 2,
+         "mediaType": 1
+        },
+        {
+         "id": 267735,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/02AYH333890A100-3-261023094013801.jpg",
+         "displayOrder": 3,
+         "mediaType": 1
+        }
+       ],
+       "price": {
+        "oldPrice": 6999,
+        "newPrice": 6999,
+        "currencyCode": "TRY"
+       },
+       "variants": [
+        {
+         "variantId": 38273,
+         "specName": "size",
+         "specValueName": "40",
+         "quantity": 2
+        },
+        {
+         "variantId": 38274,
+         "specName": "size",
+         "specValueName": "41",
+         "quantity": 20
+        },
+        {
+         "variantId": 38275,
+         "specName": "size",
+         "specValueName": "42",
+         "quantity": 17
+        },
+        {
+         "variantId": 38276,
+         "specName": "size",
+         "specValueName": "43",
+         "quantity": 26
+        },
+        {
+         "variantId": 38277,
+         "specName": "size",
+         "specValueName": "44",
+         "quantity": 6
+        },
+        {
+         "variantId": 38278,
+         "specName": "size",
+         "specValueName": "45",
+         "quantity": 0
+        }
+       ],
+       "relatedVariants": [
+        {
+         "variantId": 38273,
+         "specValueName": "SİYAH",
+         "slug": "siyah-erkek-rugan-deri-siyah-kalin-tabanli-klasik-loafer-02ayh333890a100-p-38273",
+         "isSelected": true,
+         "hasStock": true
+        }
+       ]
+      },
+      {
+       "variantId": 10901,
+       "productId": 2424,
+       "productName": "Erkek Süet Deri Mavi Loafer",
+       "shortDescription": "",
+       "erpCode": "02AYH303060A620",
+       "sku": "02AYH303060A62040",
+       "slug": "mavi-erkek-suet-deri-mavi-loafer-02ayh303060a620-p-10901",
+       "brandName": "HOTİÇ",
+       "brandSlug": "hotic",
+       "categories": [
+        {
+         "id": 981,
+         "name": "Erkek Ayakkabı",
+         "isVirtualCategory": false
+        },
+        {
+         "id": 982,
+         "name": "Erkek Tüm Ayakkabılar",
+         "isVirtualCategory": false
+        },
+        {
+         "id": 984,
+         "name": "Erkek Loafer Ayakkabı",
+         "isVirtualCategory": false
+        }
+       ],
+       "pictures": [
+        {
+         "id": 75723,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/02AYH303060A620-2-250415141559026.jpg",
+         "displayOrder": 2,
+         "mediaType": 1
+        },
+        {
+         "id": 75729,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/02AYH303060A620-3-250415141559369.jpg",
+         "displayOrder": 3,
+         "mediaType": 1
+        },
+        {
+         "id": 75735,
+         "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/02AYH303060A620-4-250415141559749.jpg",
+         "displayOrder": 4,
+         "mediaType": 1
+        }
+       ],
+       "price": {
+        "oldPrice": 1999,
+        "newPrice": 1999,
+        "currencyCode": "TRY"
+       },
+       "variants": [
+        {
+         "variantId": 10901,
+         "specName": "size",
+         "specValueName": "40",
+         "quantity": 3
+        },
+        {
+         "variantId": 10902,
+         "specName": "size",
+         "specValueName": "41",
+         "quantity": 1
+        },
+        {
+         "variantId": 10903,
+         "specName": "size",
+         "specValueName": "42",
+         "quantity": 0
+        },
+        {
+         "variantId": 10904,
+         "specName": "size",
+         "specValueName": "43",
+         "quantity": 2
+        },
+        {
+         "variantId": 10905,
+         "specName": "size",
+         "specValueName": "44",
+         "quantity": 0
+        },
+        {
+         "variantId": 10906,
+         "specName": "size",
+         "specValueName": "45",
+         "quantity": 0
+        }
+       ],
+       "relatedVariants": [
+        {
+         "variantId": 10901,
+         "specValueName": "MAVİ",
+         "slug": "mavi-erkek-suet-deri-mavi-loafer-02ayh303060a620-p-10901",
+         "isSelected": true,
+         "hasStock": true
+        },
+        {
+         "variantId": 17892,
+         "specValueName": "BEJ",
+         "slug": "bej-erkek-suet-deri-bej-loafer-02ayh303060a310-p-17892",
+         "isSelected": false,
+         "hasStock": null
+        }
+       ]
+      }
+     ],
+     "hasNextPage": true,
+     "totalPages": 8
+    }
+   }
+  }
+ }
+}

@@ -364,9 +364,12 @@ async def test_a_source_whose_paths_robots_disallows_is_reported_blocked(router:
     assert page.call_count == 0
 
 
-def test_registry_lists_the_three_sources_with_conventional_seller_slugs() -> None:
-    assert sorted(SOURCE_CLASSES) == ["derimod", "jack-jones", "koton"]
-    assert runnable_slugs() == ["derimod", "jack-jones", "koton"]
+ALL_SOURCES = ["colins", "derimod", "hotic", "jack-jones", "koton", "network", "twist"]
+
+
+def test_registry_lists_every_source_with_conventional_seller_slugs() -> None:
+    assert sorted(SOURCE_CLASSES) == ALL_SOURCES
+    assert runnable_slugs() == ALL_SOURCES
     for slug, cls in SOURCE_CLASSES.items():
         assert cls.slug == slug
         assert not cls.blocked
@@ -374,7 +377,7 @@ def test_registry_lists_the_three_sources_with_conventional_seller_slugs() -> No
 
 
 async def test_sellers_are_brand_stores_with_backend_slugs(http: PoliteClient) -> None:
-    expected = {"derimod": "derimod-store", "koton": "koton-store", "jack-jones": "jack-jones-store"}
+    expected = {slug: f"{slug}-store" for slug in ALL_SOURCES}
     for slug, seller_slug in expected.items():
         source = build_source(slug, http)
         assert source.seller_slug == seller_slug
@@ -385,7 +388,7 @@ async def test_sellers_are_brand_stores_with_backend_slugs(http: PoliteClient) -
 
 
 def test_unknown_source_and_blocked_flag(http: PoliteClient, monkeypatch: pytest.MonkeyPatch) -> None:
-    with pytest.raises(UnknownSourceError, match="known sources: derimod, jack-jones, koton"):
+    with pytest.raises(UnknownSourceError, match="known sources: colins, derimod, hotic, jack-jones, koton, network, twist"):
         build_source("zara", http)
     monkeypatch.setattr(SOURCE_CLASSES["koton"], "blocked", True)
     assert "koton" not in runnable_slugs()

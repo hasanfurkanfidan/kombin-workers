@@ -70,7 +70,12 @@ async def _run_one(
     async with _http(settings) as http:
         source = _source_or_exit(slug, http, max_pages)
         return await run_source(
-            source, backend=backend, limit=limit, concurrency=settings.concurrency, collect=collect
+            source,
+            backend=backend,
+            limit=limit,
+            max_items=settings.max_items_per_source,
+            concurrency=settings.concurrency,
+            collect=collect,
         )
 
 

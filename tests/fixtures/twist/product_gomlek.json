@@ -1,0 +1,321 @@
+{
+ "product": {
+  "id": 20540,
+  "routePath": "naturel-ekose-desen-yakasi-baglamali-gomlek",
+  "routeDescription": "EKOSE DESENİN ZAMANSIZ TAVRINI BAĞLAMALI YAKA DETAYIYLA BULUŞTURAN GÖMLEK, SOKAK MODASININ EN HİT TRENDLERİNDEN BİRİNİ SUNUYOR. TROK VE HOTFIX BASKILAR, PARÇAYA ENDÜSTRİYEL VE DİNAMİK BİR IŞILTI KAZANDIRIYOR. TAKIMI OLAN ETEKLE KOMBİNLEYEREK İDDİALI BİR TOTAL LOOK ELDE EDEBİLİR VEYA WIDE LEG PANTOLONLARLA DAHA ÇABASIZ BİR DURUŞA İMZA ATABİLİRSİN.",
+  "name": "EKOSE DESEN YAKASI BAĞLAMALI GÖMLEK",
+  "shortName": "Natürel",
+  "sku": "TW6260025124003",
+  "code": "TW6260025124003",
+  "stocksByBarcode": {
+   "80262": 0,
+   "80263": 1,
+   "80264": 1,
+   "80265": 1,
+   "80266": 1,
+   "80267": 0
+  },
+  "basePrice": 4999,
+  "discountPrice": 4999,
+  "salesPrice": 4999,
+  "brand": {
+   "name": "Twist"
+  },
+  "categories": [
+   {
+    "id": 234,
+    "name": "Gömlek"
+   }
+  ],
+  "barcodes": [
+   {
+    "id": 80262,
+    "barcode": "8683560272661",
+    "stockTypeValues": [
+     {
+      "id": 56,
+      "name": "42",
+      "order": 209,
+      "stockTypeId": 1
+     }
+    ]
+   },
+   {
+    "id": 80263,
+    "barcode": "8683560272630",
+    "stockTypeValues": [
+     {
+      "id": 51,
+      "name": "36",
+      "order": 201,
+      "stockTypeId": 1
+     }
+    ]
+   },
+   {
+    "id": 80264,
+    "barcode": "8683560272623",
+    "stockTypeValues": [
+     {
+      "id": 52,
+      "name": "34",
+      "order": 200,
+      "stockTypeId": 1
+     }
+    ]
+   },
+   {
+    "id": 80265,
+    "barcode": "8683560272647",
+    "stockTypeValues": [
+     {
+      "id": 50,
+      "name": "38",
+      "order": 205,
+      "stockTypeId": 1
+     }
+    ]
+   },
+   {
+    "id": 80266,
+    "barcode": "8683560272654",
+    "stockTypeValues": [
+     {
+      "id": 53,
+      "name": "40",
+      "order": 208,
+      "stockTypeId": 1
+     }
+    ]
+   },
+   {
+    "id": 80267,
+    "barcode": "8683560272678",
+    "stockTypeValues": [
+     {
+      "id": 59,
+      "name": "44",
+      "order": 210,
+      "stockTypeId": 1
+     }
+    ]
+   }
+  ],
+  "documents": [
+   {
+    "id": 87775,
+    "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_0.jpg",
+    "documentType": "Image",
+    "isDefault": true,
+    "order": 0
+   },
+   {
+    "id": 87776,
+    "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003.jpg",
+    "documentType": "Image",
+    "isDefault": false,
+    "order": 1
+   },
+   {
+    "id": 87774,
+    "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_1.jpg",
+    "documentType": "Image",
+    "isDefault": false,
+    "order": 2
+   },
+   {
+    "id": 87773,
+    "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_2.jpg",
+    "documentType": "Image",
+    "isDefault": false,
+    "order": 3
+   },
+   {
+    "id": 87772,
+    "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_3.jpg",
+    "documentType": "Image",
+    "isDefault": false,
+    "order": 4
+   },
+   {
+    "id": 85616,
+    "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_10.jpg",
+    "documentType": "Image",
+    "isDefault": false,
+    "order": 11
+   },
+   {
+    "id": 85615,
+    "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_11.jpg",
+    "documentType": "Image",
+    "isDefault": false,
+    "order": 12
+   }
+  ],
+  "attributes": [
+   {
+    "attribute": {
+     "id": 18,
+     "name": "Renk",
+     "integrationCode": "color"
+    },
+    "attributeValues": [
+     {
+      "id": 14316,
+      "icon": "Twist/uploads/colors/krem.png",
+      "value": "Natürel",
+      "attributeId": 18,
+      "routePath": "naturel",
+      "routeTitle": "Natürel",
+      "routeDescription": "Natürel",
+      "parameterName": "renk",
+      "integrationCode": "color_natürel",
+      "sort": 74
+     }
+    ]
+   },
+   {
+    "attribute": {
+     "id": 20,
+     "name": "Kategori",
+     "integrationCode": "category"
+    },
+    "attributeValues": [
+     {
+      "id": 210,
+      "value": "Gömlek",
+      "attributeId": 20,
+      "routePath": "gomlek",
+      "routeTitle": "Gömlek",
+      "routeDescription": "Gömlek",
+      "parameterName": "kategori",
+      "integrationCode": "category_gomlek",
+      "sort": 15
+     }
+    ]
+   },
+   {
+    "attribute": {
+     "id": 47,
+     "name": "Filter Color",
+     "integrationCode": "attr_FilterColor"
+    },
+    "attributeValues": [
+     {
+      "id": 14317,
+      "value": "Natürel",
+      "attributeId": 47,
+      "routePath": "filtercolor-naturel",
+      "routeTitle": "Natürel",
+      "routeDescription": "Natürel",
+      "parameterName": "filter-color",
+      "integrationCode": "attr_FilterColor_natürel",
+      "sort": 0
+     }
+    ]
+   },
+   {
+    "attribute": {
+     "id": 81,
+     "name": "Urun Alt Grubu",
+     "integrationCode": "attr_UrunAltGrubu"
+    },
+    "attributeValues": [
+     {
+      "id": 1495,
+      "value": "Gomlek",
+      "attributeId": 81,
+      "routePath": "urunaltgrubu-gomlek",
+      "routeTitle": "Gomlek",
+      "routeDescription": "Gomlek",
+      "parameterName": "urun-alt-grubu",
+      "integrationCode": "attr_UrunAltGrubu_gomlek",
+      "sort": 0
+     }
+    ]
+   },
+   {
+    "attribute": {
+     "id": 93,
+     "name": "ColorCode",
+     "integrationCode": "attr_ColorCode"
+    },
+    "attributeValues": [
+     {
+      "id": 596,
+      "value": "003",
+      "attributeId": 93,
+      "routePath": "colorcode-003",
+      "routeTitle": "003",
+      "routeDescription": "003",
+      "parameterName": "colorcode",
+      "integrationCode": "attr_ColorCode_003",
+      "sort": 0
+     }
+    ]
+   },
+   {
+    "attribute": {
+     "id": 38,
+     "name": "Cinsiyet",
+     "integrationCode": "gender"
+    },
+    "attributeValues": [
+     {
+      "id": 366,
+      "value": "Kadın",
+      "attributeId": 38,
+      "routePath": "gender-kadin",
+      "routeTitle": "Kadın",
+      "routeDescription": "Kadın",
+      "parameterName": "cinsiyet-19",
+      "integrationCode": "gender_kadın",
+      "sort": 0
+     }
+    ]
+   },
+   {
+    "attribute": {
+     "id": 133,
+     "name": "KumasTipi\t",
+     "integrationCode": "attr_PrdKumasTipi"
+    },
+    "attributeValues": [
+     {
+      "id": 665,
+      "value": "Dokuma",
+      "attributeId": 133,
+      "routePath": "prdkumastipi-dokuma",
+      "routeTitle": "Dokuma",
+      "routeDescription": "Dokuma",
+      "parameterName": "kumastipi",
+      "integrationCode": "attr_PrdKumasTipi_Dokuma",
+      "sort": 0
+     }
+    ]
+   }
+  ]
+ },
+ "ld": {
+  "@type": "Product",
+  "name": "EKOSE DESEN YAKASI BAĞLAMALI GÖMLEK",
+  "sku": "TW6260025124003",
+  "image": [
+   "https://cdn.twist.com.tr/mnresize/2400/-/Twist/products/FW2627/Koleksiyon/TW6260025124003_0.jpg",
+   "https://cdn.twist.com.tr/mnresize/2400/-/Twist/products/FW2627/Koleksiyon/TW6260025124003.jpg",
+   "https://cdn.twist.com.tr/mnresize/2400/-/Twist/products/FW2627/Koleksiyon/TW6260025124003_1.jpg",
+   "https://cdn.twist.com.tr/mnresize/2400/-/Twist/products/FW2627/Koleksiyon/TW6260025124003_2.jpg",
+   "https://cdn.twist.com.tr/mnresize/2400/-/Twist/products/FW2627/Koleksiyon/TW6260025124003_3.jpg",
+   "https://cdn.twist.com.tr/mnresize/2400/-/Twist/products/FW2627/Koleksiyon/TW6260025124003_10.jpg",
+   "https://cdn.twist.com.tr/mnresize/2400/-/Twist/products/FW2627/Koleksiyon/TW6260025124003_11.jpg"
+  ],
+  "material": "Ana Kumas-(%100 PAMUK)",
+  "color": "Natürel",
+  "audience": {
+   "@type": "PeopleAudience",
+   "suggestedGender": "female",
+   "suggestedMinAge": 18
+  },
+  "description": "EKOSE DESENİN ZAMANSIZ TAVRINI BAĞLAMALI YAKA DETAYIYLA BULUŞTURAN GÖMLEK, SOKAK MODASININ EN HİT TRENDLERİNDEN BİRİNİ SUNUYOR. TROK VE HOTFIX BASKILAR, PARÇAYA ENDÜSTRİYEL VE DİNAMİK BİR IŞILTI KAZANDIRIYOR. TAKIMI OLAN ETEKLE KOMBİNLEYEREK İDDİALI BİR TOTAL LOOK ELDE EDEBİLİR VEYA WIDE LEG PANTOLONLARLA DAHA ÇABASIZ BİR DURUŞA İMZA ATABİLİRSİN."
+ }
+}
