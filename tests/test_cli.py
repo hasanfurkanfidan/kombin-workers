@@ -33,11 +33,11 @@ def mock_derimod(router: respx.MockRouter) -> None:
     )
 
 
-def test_sources_lists_all_three() -> None:
+def test_sources_lists_every_source() -> None:
     result = runner.invoke(app, ["sources"])
     assert result.exit_code == 0
     lines = [line for line in result.stdout.splitlines() if "seller=" in line]
-    assert [line.split()[0] for line in lines] == ["derimod", "jack-jones", "koton"]
+    assert [line.split()[0] for line in lines] == ["colins", "derimod", "hotic", "jack-jones", "koton", "network", "twist"]
     assert all("BLOCKED" not in line for line in lines)
 
 
@@ -56,6 +56,15 @@ def test_check_prints_normalized_items_as_json_and_calls_no_backend(router: resp
     assert items[0]["product"]["brandName"] == "Derimod"
     assert items[0]["imageUrls"]
     assert not any(str(call.request.url).startswith(BASE) for call in router.calls)
+
+
+def test_the_per_source_cap_comes_from_settings(router: respx.MockRouter, monkeypatch: pytest.MonkeyPatch) -> None:
+    mock_derimod(router)
+    monkeypatch.setenv("KOMBIN_MAX_ITEMS_PER_SOURCE", "2")
+    get_settings.cache_clear()
+    result = runner.invoke(app, ["check", "derimod", "--limit", "10", "--max-pages", "1"])
+    assert result.exit_code == 0, result.output
+    assert len(json.loads(result.stdout)) == 2
 
 
 def test_run_registers_the_seller_then_upserts(router: respx.MockRouter) -> None:

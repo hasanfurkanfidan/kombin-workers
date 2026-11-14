@@ -51,6 +51,8 @@ from kombin_workers.normalize.colors import map_color, try_map_color
         ("Siyah/Beyaz", C.BLACK),
         ("black", C.BLACK),
         ("Navy", C.NAVY),
+        ("Natürel", C.BEIGE),
+        ("Natural", C.BEIGE),
     ],
 )
 def test_turkish_color_words(text: str, expected: C) -> None:

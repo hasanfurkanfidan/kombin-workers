@@ -24,7 +24,7 @@ _WORDS = {
     "xxsmall": "XXS", "xsmall": "XS", "small": "S", "medium": "M", "large": "L", "xlarge": "XL", "xxlarge": "XXL",
     "2xl": "XXL", "3xl": "XXXL", "2xs": "XXS", "xxxl": "XXXL", "xxxs": "XXXS",
 }  # fmt: skip
-_ONE_SIZE_WORDS = frozenset({"std", "standart", "standard", "tek ebat", "tekebat", "one size", "onesize", "os", "u", "tek beden"})
+_ONE_SIZE_WORDS = frozenset({"std", "stnd", "standart", "standard", "tek ebat", "tekebat", "one size", "onesize", "os", "u", "tek beden"})
 _PLACEHOLDERS = ("beden sec", "secin", "seciniz", "size select", "select size")
 _HALF = {"½": ".5", "1/2": ".5"}
 

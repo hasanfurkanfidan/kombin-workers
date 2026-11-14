@@ -35,6 +35,7 @@ from kombin_workers.normalize.sizes import normalize_size, normalize_sizes
         ("Standart", ["STD"]),
         ("TEK EBAT", ["STD"]),
         ("One Size", ["STD"]),
+        ("STND", ["STD"]),
         ("6 Yaş", ["6Y"]),
         ("3-4 Yaş", ["3-4Y"]),
         ("9-12 Ay", ["9-12M"]),

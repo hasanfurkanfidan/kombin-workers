@@ -1,0 +1,36 @@
+{
+ "props": {
+  "pageProps": {
+   "data": {
+    "response": {
+     "totalItems": 53,
+     "totalPages": 3,
+     "currentPage": 1,
+     "products": [
+      {
+       "id": 20540,
+       "routePath": "naturel-ekose-desen-yakasi-baglamali-gomlek",
+       "name": "EKOSE DESEN YAKASI BAĞLAMALI GÖMLEK",
+       "sku": "TW6260025124003",
+       "salesPrice": 4999
+      },
+      {
+       "id": 20531,
+       "routePath": "lacivert-cizgili-crop-gomlek",
+       "name": "ÇİZGİLİ CROP GÖMLEK",
+       "sku": "TW6260025147015",
+       "salesPrice": 2999
+      },
+      {
+       "id": 20530,
+       "routePath": "mavi-kravat-baskili-poplin-gomlek",
+       "name": "KRAVAT BASKILI POPLİN GÖMLEK",
+       "sku": "TW6260025149089",
+       "salesPrice": 3999
+      }
+     ]
+    }
+   }
+  }
+ }
+}

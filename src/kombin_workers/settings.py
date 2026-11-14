@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     requests_per_second: float = Field(1.0, gt=0,validation_alias="KOMBIN_REQUESTS_PER_SECOND")
     concurrency: int = Field(4, ge=1, le=4, validation_alias="KOMBIN_CONCURRENCY")
     max_pages: int = Field(5, ge=1, validation_alias="KOMBIN_MAX_PAGES")
+    max_items_per_source: int = Field(400, ge=1, validation_alias="KOMBIN_MAX_ITEMS_PER_SOURCE")
     batch_size: int = Field(200, ge=1, le=500, validation_alias="KOMBIN_BATCH_SIZE")
     max_consecutive_failures: int = Field(20, ge=1, validation_alias="KOMBIN_MAX_CONSECUTIVE_FAILURES")
     http_timeout_seconds: float = Field(30.0, gt=0, validation_alias="KOMBIN_HTTP_TIMEOUT")

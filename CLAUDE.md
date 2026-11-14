@@ -11,7 +11,9 @@ retailer and brand web sites, normalize them, and push them to the backend's int
 - `POST /api/v1/internal/catalog/offers/sweep` – deactivate listings not seen for 48 h
 
 All internal calls carry `X-Internal-Key`. First deliverable: the framework, three brand-store sources (Derimod, Koton,
-Jack & Jones) and a runnable schedule. Details of each source: `docs/sources.md`.
+Jack & Jones) and a runnable schedule. Task W2 added Network, Hotiç, Twist and Colin's (a run takes at most 400 products per
+source, `KOMBIN_MAX_ITEMS_PER_SOURCE`). Details of each source, and the allowed / disallowed decision for every candidate
+site: `docs/sources.md`.
 
 ## Hard rules (legal and ethical) – verbatim from the task
 
@@ -20,6 +22,10 @@ Jack & Jones) and a runnable schedule. Details of each source: `docs/sources.md`
 - Identify ourselves: `User-Agent: KombinBot/0.1 (+https://kombin.app/bot; contact: [YOUR EMAIL])`. Placeholder stays until the owner fills it.
 - No login walls, no CAPTCHAs, no proxy rotation, no headless browsers in this task. If a site cannot be read with plain HTTP, record that and move on.
 - Never store personal data. Never fetch more than one image per product (we store URLs, not files).
+
+Terms count as well as robots.txt (task W2): read the site's terms-of-use / member agreement before writing a source. A clause that
+forbids crawlers, scraping or data mining without written permission (LC Waikiki, Flo) makes the source disallowed even
+though its robots.txt allows the pages; record it in `docs/sources.md` and write no module.
 
 In practice: a site that answers 429/403 is slowed down or left alone, never worked around (no other user agents, no
 fingerprint tricks, no retries on a loop). `PoliteClient` enforces the rate, robots, backoff and the 20-failure stop; do
@@ -44,7 +50,8 @@ src/kombin_workers/
   pipeline.py        discover -> fetch (4 at a time, still <= 1 rps) -> normalize -> batch upsert -> summary
   scheduler.py       daemon loop (run-all every 6 h, sweep daily, jitter)
   normalize/         colors, categories, sizes, attributes, audience, text  (every mapping table lives here)
-  sources/           base.py (Source contract), registry.py, derimod.py, koton.py, jackjones.py
+  sources/           base.py (Source contract), registry.py, embedded.py (__NEXT_DATA__ / ld+json readers),
+                     derimod.py, koton.py, jackjones.py, network.py, hotic.py, twist.py, colins.py
 tests/               fixtures/<source>/ (saved real responses + robots.txt), one test module per area
 ```
 

@@ -3,13 +3,21 @@
 Ingestion workers for Kombin. They read product listings from Turkish brand stores, normalize them (colour, category,
 sizes, audience, fit, ...) and push them to the Kombin backend's internal catalog endpoints.
 
-| Source | Slug | Platform | Data used |
-|---|---|---|---|
-| Derimod | `derimod` | Shopify | `collections/<handle>/products.json` |
-| Koton | `koton` | Akinon | `?format=json` on category and product pages |
-| Jack & Jones | `jack-jones` | server-rendered Vue | `window.__INITIAL_STATE__` in listing and product pages |
+| Source | Slug | Audience | Platform | Data used |
+|---|---|---|---|---|
+| Derimod | `derimod` | women, men | Shopify | `collections/<handle>/products.json` |
+| Koton | `koton` | women, men | Akinon | `?format=json` on category and product pages |
+| Jack & Jones | `jack-jones` | men (+ some women) | server-rendered Vue | `window.__INITIAL_STATE__` in listing and product pages |
+| Network | `network` | women, men | server-rendered | full product JSON embedded in each listing page (`window.defaultProductList`) |
+| Hotiç | `hotic` | women, men | Next.js | `__NEXT_DATA__` of listing pages (full product records) |
+| Twist | `twist` | women | Next.js | `__NEXT_DATA__` of category pages (first page only) and product pages |
+| Colin's | `colins` | women, men | server-rendered ASP.NET | data attributes of listing cards + `ld+json` `Product` on product pages |
 
-How each site was investigated, what it exposes and what was left out: [docs/sources.md](docs/sources.md).
+How each site was investigated, what it exposes and what was left out: [docs/sources.md](docs/sources.md). That file also
+holds the **decision for every candidate** (robots.txt lines, terms-of-use findings, date). Of the task W2 candidates,
+Network, Hotiç, Twist and Colin's are in use; LC Waikiki and Flo forbid automated access in their terms, DeFacto and
+İpekyol do not let us read robots.txt (403 / 418), and Mavi is allowed but not implemented (sizes with stock are only in a
+compressed Angular state).
 Working conventions (legal rules, how to add a source): [CLAUDE.md](CLAUDE.md).
 
 ## Setup
@@ -33,9 +41,11 @@ uv run kombin-workers sweep                        # deactivate listings unseen 
 uv run kombin-workers daemon                       # run-all every 6 h + sweep daily, JSON logs
 ```
 
-Defaults: 1 request/second per host, 4 fetches in flight, 5 pages per category (`--max-pages`), at most 1500 products
-per source, upserts in batches of 200. Settings can be overridden with `KOMBIN_*` environment variables (see
-`settings.py`).
+Defaults: 1 request/second per host, 4 fetches in flight, 5 pages per category (`--max-pages`), at most **400 products
+per source per run** (`KOMBIN_MAX_ITEMS_PER_SOURCE`), upserts in batches of 200. A capped run takes an even share of every
+category and of both audiences (women's and men's listings alternate and are dealt out one product at a time). The run
+summary prints what the backend accepted per category and per audience. Settings can be overridden with `KOMBIN_*`
+environment variables (see `settings.py`).
 
 ## Docker
 
