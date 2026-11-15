@@ -11,7 +11,7 @@ retailer and brand web sites, normalize them, and push them to the backend's int
 - `POST /api/v1/internal/catalog/offers/sweep` – deactivate listings not seen for 48 h
 
 All internal calls carry `X-Internal-Key`. First deliverable: the framework, three brand-store sources (Derimod, Koton,
-Jack & Jones) and a runnable schedule. Task W2 added Network, Hotiç, Twist and Colin's (a run takes at most 400 products per
+Jack & Jones) and a runnable schedule. Task W3 made every source send the whole gallery, packshots first (see "Images" below), and moved Twist from first pages to its product sitemap. Task W2 added Network, Hotiç, Twist and Colin's (a run takes at most 400 products per
 source, `KOMBIN_MAX_ITEMS_PER_SOURCE`). Details of each source, and the allowed / disallowed decision for every candidate
 site: `docs/sources.md`.
 
@@ -19,7 +19,7 @@ site: `docs/sources.md`.
 
 - Fetch only what is needed, at a polite rate: default 1 request/second per host, exponential backoff on 429/5xx, hard stop for the source after 20 consecutive failures.
 - Honor `robots.txt` (use `urllib.robotparser`); if a source disallows the paths we need, do not scrape it — mark the source `blocked` in its module and report it. Prefer official/structured data when a site exposes it (JSON endpoints its own storefront uses, `application/ld+json` Product markup, sitemaps, feeds); parse HTML only as a last resort.
-- Identify ourselves: `User-Agent: KombinBot/0.1 (+https://kombin.app/bot; contact: [YOUR EMAIL])`. Placeholder stays until the owner fills it.
+- Identify ourselves: `User-Agent: KombinBot/0.1 (+https://kombin.app/bot; contact: <BOT_CONTACT>)`. While `BOT_CONTACT` is unset or still the `[YOUR EMAIL]` placeholder the `contact:` part is omitted (never send the placeholder); the owner sets a real, non-personal address before production.
 - No login walls, no CAPTCHAs, no proxy rotation, no headless browsers in this task. If a site cannot be read with plain HTTP, record that and move on.
 - Never store personal data. Never fetch more than one image per product (we store URLs, not files).
 
@@ -49,9 +49,9 @@ src/kombin_workers/
   backend.py         typed client for the four internal endpoints; batches of 200; logs per-item errors
   pipeline.py        discover -> fetch (4 at a time, still <= 1 rps) -> normalize -> batch upsert -> summary
   scheduler.py       daemon loop (run-all every 6 h, sweep daily, jitter)
-  normalize/         colors, categories, sizes, attributes, audience, text  (every mapping table lives here)
+  normalize/         colors, categories, sizes, attributes, audience, images, text  (every mapping table lives here)
   sources/           base.py (Source contract), registry.py, embedded.py (__NEXT_DATA__ / ld+json readers),
-                     derimod.py, koton.py, jackjones.py, network.py, hotic.py, twist.py, colins.py
+                     sitemap.py (sitemap reader), derimod.py, koton.py, jackjones.py, network.py, hotic.py, twist.py, colins.py
 tests/               fixtures/<source>/ (saved real responses + robots.txt), one test module per area
 ```
 
@@ -86,6 +86,17 @@ the item (`SkipItem("unknown-category")`, counted in the run summary) – never 
 `modelCode` is `<style code>-<colour code>` for every source, so one product = one colourway (the backend merges offers by
 brand + model code and a product has a single primary colour).
 
+## Images (task W3)
+
+Try-on needs photos that show the garment without a person. Every source builds its gallery with a pure
+`gallery_urls(record)` function that collects every gallery image (site order) and passes it to
+`normalize.images.order_gallery`: likely person-free first (a hint in the file path, never `detail`, or a per-host rule in
+`images.HOST_RULES`), then unknown, then likely worn, each group in site order, capped at 8. **Never download an image to
+classify it** – the vision service does that. The backend accepts at most 6 `imageUrls` per item (more fails the whole
+item) and only stores images when an offer is created, so `NormalizedOffer` keeps the first 6 and a changed order does
+not reach products that already exist. A new hint rule goes into `HOST_RULES` with a test in `tests/test_images.py` and
+a line in `docs/sources.md`; do not state a rule as verified unless it was checked on real pages.
+
 ## Commands
 
 ```bash
@@ -102,8 +113,8 @@ uv run mypy
 ```
 
 Local backend: `http://localhost:8081`; the internal key is `INTERNAL_API_KEY` in `../kombin-backend/docker/.env`, copied
-into this repo's git-ignored `.env` as `KOMBIN_INTERNAL_KEY`. `BOT_CONTACT` keeps the `[YOUR EMAIL]` placeholder until the
-owner fills it in.
+into this repo's git-ignored `.env` as `KOMBIN_INTERNAL_KEY`. `BOT_CONTACT` stays unset (the UA then has no
+`contact:` part) until the owner fills in a real, non-personal address.
 
 ## Rules for working here
 

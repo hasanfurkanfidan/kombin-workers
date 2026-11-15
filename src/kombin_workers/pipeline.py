@@ -14,6 +14,7 @@ from pydantic import ValidationError
 from kombin_workers.backend import BackendClient
 from kombin_workers.http import FetchError, RobotsBlocked, SourceAborted
 from kombin_workers.models import NormalizedOffer
+from kombin_workers.normalize.images import first_is_person_free
 from kombin_workers.sources.base import BaseSource, ListingRef, SkipItem
 
 log = structlog.get_logger(__name__)
@@ -36,10 +37,21 @@ class RunSummary:
     normalized_by_category: Counter[str] = field(default_factory=Counter)
     upserted_by_category: Counter[str] = field(default_factory=Counter)
     upserted_by_audience: Counter[str] = field(default_factory=Counter)
+    image_total: int = 0
+    first_image_person_free: int = 0
     blocked: str | None = None
     aborted: str | None = None
     duration_seconds: float = 0.0
     items: list[NormalizedOffer] = field(default_factory=list)
+
+    @property
+    def average_images(self) -> float:
+        return self.image_total / self.normalized if self.normalized else 0.0
+
+    @property
+    def person_free_first_share(self) -> float:
+        """Share of normalized products whose first image is likely person-free (by `normalize.images` hints)."""
+        return self.first_image_person_free / self.normalized if self.normalized else 0.0
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -54,6 +66,10 @@ class RunSummary:
             "normalizedByCategory": dict(sorted(self.normalized_by_category.items())),
             "upsertedByCategory": dict(sorted(self.upserted_by_category.items())),
             "upsertedByAudience": dict(sorted(self.upserted_by_audience.items())),
+            "images": {
+                "average": round(self.average_images, 2),
+                "firstLikelyPersonFree": round(self.person_free_first_share, 3),
+            },
             "blocked": self.blocked,
             "aborted": self.aborted,
             "durationSeconds": round(self.duration_seconds, 1),
@@ -74,6 +90,8 @@ class RunSummary:
             f"backend errors:  {counts(self.backend_errors)}",
             f"by category:     {counts(self.upserted_by_category if self.batches else self.normalized_by_category)}",
             f"by audience:     {counts(self.upserted_by_audience)}",
+            f"images:          {self.average_images:.1f} per product, first image likely person-free "
+            f"{self.person_free_first_share:.0%}",
             f"duration:        {self.duration_seconds:.1f}s",
         ]
         if self.blocked:
@@ -148,6 +166,8 @@ async def run_source(
             seen_ids.add(item.external_id)
             summary.normalized += 1
             summary.normalized_by_category[item.product.category_slug] += 1
+            summary.image_total += len(item.image_urls)
+            summary.first_image_person_free += first_is_person_free(item.image_urls)
             if collect:
                 summary.items.append(item)
             batch.append(item)

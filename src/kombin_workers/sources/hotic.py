@@ -24,6 +24,7 @@ from kombin_workers.models import NormalizedOffer, NormalizedProduct, StockStatu
 from kombin_workers.normalize.attributes import infer_attributes
 from kombin_workers.normalize.categories import map_category
 from kombin_workers.normalize.colors import map_color
+from kombin_workers.normalize.images import order_gallery
 from kombin_workers.normalize.sizes import normalize_sizes
 from kombin_workers.normalize.text import clean_text
 from kombin_workers.sources.base import BaseSource, Listing, ListingRef, Page, SkipItem, adult_audience
@@ -84,6 +85,12 @@ class HoticSource(BaseSource):
         return normalize_product(dict(ref.data), ref.url)
 
 
+def gallery_urls(record: dict[str, Any]) -> list[str]:
+    """Every `pictures[]` entry by `displayOrder`, packshot hints first, at most 8 (see `normalize.images`)."""
+    pictures = [p for p in record.get("pictures") or [] if isinstance(p, dict) and p.get("url")]
+    return order_gallery(clean_text(p["url"]) for p in sorted(pictures, key=lambda p: int(p.get("displayOrder") or 0)))
+
+
 def normalize_product(record: dict[str, Any], url: str) -> NormalizedOffer:
     if record.get("brandSlug") not in (None, BRAND_SLUG):
         raise SkipItem("other-brand")
@@ -105,8 +112,7 @@ def normalize_product(record: dict[str, Any], url: str) -> NormalizedOffer:
     old = _money(price_block.get("oldPrice"))
     original = old if old is not None and old > price else None
 
-    pictures = [p for p in record.get("pictures") or [] if isinstance(p, dict) and p.get("url")]
-    images = [clean_text(p["url"]) for p in sorted(pictures, key=lambda p: int(p.get("displayOrder") or 0))]
+    images = gallery_urls(record)
     if not images:
         raise SkipItem("no-images")
 

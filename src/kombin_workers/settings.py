@@ -8,6 +8,7 @@ from pydantic import AliasChoices, Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BOT_CONTACT_PLACEHOLDER = "[YOUR EMAIL]"
+USER_AGENT_BASE = "KombinBot/0.1 (+https://kombin.app/bot)"
 
 
 class Settings(BaseSettings):
@@ -16,7 +17,7 @@ class Settings(BaseSettings):
     api_url: str = Field("http://localhost:8081", validation_alias="KOMBIN_API_URL")
     internal_key: SecretStr = Field(SecretStr(""), validation_alias="KOMBIN_INTERNAL_KEY")
     bot_contact: str = Field(
-        BOT_CONTACT_PLACEHOLDER, validation_alias=AliasChoices("BOT_CONTACT", "KOMBIN_BOT_CONTACT")
+        "", validation_alias=AliasChoices("BOT_CONTACT", "KOMBIN_BOT_CONTACT")
     )
 
     requests_per_second: float = Field(1.0, gt=0,validation_alias="KOMBIN_REQUESTS_PER_SECOND")
@@ -33,8 +34,17 @@ class Settings(BaseSettings):
     jitter_seconds: float = Field(600.0, ge=0, validation_alias="KOMBIN_JITTER_SECONDS")
 
     @property
+    def has_bot_contact(self) -> bool:
+        """True when `BOT_CONTACT` holds a real value (not empty, not the `[YOUR EMAIL]` placeholder or another `[...]`)."""
+        contact = self.bot_contact.strip()
+        return bool(contact) and not (contact.startswith("[") and contact.endswith("]"))
+
+    @property
     def user_agent(self) -> str:
-        return f"KombinBot/0.1 (+https://kombin.app/bot; contact: {self.bot_contact})"
+        """`KombinBot/0.1 (+https://kombin.app/bot; contact: <BOT_CONTACT>)`; without a real contact the `contact:` part is left out."""
+        if not self.has_bot_contact:
+            return USER_AGENT_BASE
+        return f"KombinBot/0.1 (+https://kombin.app/bot; contact: {self.bot_contact.strip()})"
 
 
 @lru_cache

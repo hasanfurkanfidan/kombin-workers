@@ -31,6 +31,7 @@ from kombin_workers.models import NormalizedOffer, NormalizedProduct, StockStatu
 from kombin_workers.normalize.attributes import infer_attributes
 from kombin_workers.normalize.categories import map_category
 from kombin_workers.normalize.colors import map_color, try_map_color
+from kombin_workers.normalize.images import order_gallery
 from kombin_workers.normalize.sizes import normalize_sizes
 from kombin_workers.normalize.text import clean_text
 from kombin_workers.sources.base import BaseSource, Listing, ListingRef, Page, SkipItem, adult_audience
@@ -130,7 +131,7 @@ def normalize_product(record: dict[str, Any], url: str) -> NormalizedOffer:
     strike = _money(record.get("StrikeThroughPriceToShowOnScreen"))
     original = strike if strike is not None and strike > price else None
 
-    images = _images(record)
+    images = gallery_urls(record)
     if not images:
         raise SkipItem("no-images")
 
@@ -196,7 +197,8 @@ def _attributes(record: dict[str, Any]) -> dict[str, str]:
     return result
 
 
-def _images(record: dict[str, Any]) -> list[str]:
+def gallery_urls(record: dict[str, Any]) -> list[str]:
+    """Every `MediaList` entry by `DisplayOrder`, packshot hints first, at most 8 (see `normalize.images`)."""
     media = [m for m in record.get("MediaList") or [] if isinstance(m, dict)]
     urls: list[str] = []
     for item in sorted(media, key=lambda m: int(m.get("DisplayOrder") or 0)):
@@ -205,7 +207,7 @@ def _images(record: dict[str, Any]) -> list[str]:
             if template:
                 urls.append(str(template).replace("{width}", IMAGE_WIDTH).replace("{height}", "-").replace(" ", "%20"))
                 break
-    return urls
+    return order_gallery(urls)
 
 
 def _last_segment(path: object) -> str:

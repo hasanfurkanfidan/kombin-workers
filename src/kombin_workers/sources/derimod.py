@@ -33,6 +33,7 @@ from kombin_workers.normalize.attributes import infer_attributes
 from kombin_workers.normalize.audience import map_audience
 from kombin_workers.normalize.categories import map_category
 from kombin_workers.normalize.colors import map_color, try_map_color
+from kombin_workers.normalize.images import order_gallery
 from kombin_workers.normalize.sizes import normalize_sizes
 from kombin_workers.normalize.text import clean_text, html_to_text, strip_brand_prefix
 from kombin_workers.sources.base import BaseSource, Listing, ListingRef, Page, SkipItem
@@ -118,7 +119,7 @@ def normalize_product(product: dict[str, Any], url: str) -> NormalizedOffer:
     compare_at = _decimal(reference.get("compare_at_price"))
     original = compare_at if compare_at is not None and compare_at > price else None
 
-    images = [clean_text(image.get("src")) for image in product.get("images", []) if image.get("src")]
+    images = gallery_urls(product)
     if not images:
         raise SkipItem("no-images")
 
@@ -156,6 +157,12 @@ def normalize_product(product: dict[str, Any], url: str) -> NormalizedOffer:
             description=body_text[:4000] or None,
         ),
     )
+
+
+def gallery_urls(product: dict[str, Any]) -> list[str]:
+    """Every picture of the Shopify product by `position`, packshot hints first, at most 8 (see `normalize.images`)."""
+    pictures = [i for i in product.get("images", []) if isinstance(i, dict) and i.get("src")]
+    return order_gallery(clean_text(i["src"]) for i in sorted(pictures, key=lambda i: int(i.get("position") or 0)))
 
 
 def _decimal(raw: object) -> Decimal | None:
