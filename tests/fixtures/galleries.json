@@ -1,0 +1,668 @@
+{
+ "hotic": [
+  {
+   "name": null,
+   "id": 256625,
+   "cdnDomainName": "https://img-phantomhotic.sm.mncdn.com/",
+   "filePath": "img/assets/base/originals/03CAH326430A748-1-260929064206065.jpg",
+   "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH326430A748-1-260929064206065.jpg",
+   "mediaType": 1,
+   "mediaPositionType": 0,
+   "showOnWeb": true,
+   "showOnApp": true,
+   "showOnProductDetail": true,
+   "showOnProductList": true,
+   "useOriginalDimensions": false,
+   "displayOrder": 1
+  },
+  {
+   "name": null,
+   "id": 256626,
+   "cdnDomainName": "https://img-phantomhotic.sm.mncdn.com/",
+   "filePath": "img/assets/base/originals/03CAH326430A748-2-260929064206115.jpg",
+   "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH326430A748-2-260929064206115.jpg",
+   "mediaType": 1,
+   "mediaPositionType": 0,
+   "showOnWeb": true,
+   "showOnApp": true,
+   "showOnProductDetail": true,
+   "showOnProductList": true,
+   "useOriginalDimensions": false,
+   "displayOrder": 2
+  },
+  {
+   "name": null,
+   "id": 256627,
+   "cdnDomainName": "https://img-phantomhotic.sm.mncdn.com/",
+   "filePath": "img/assets/base/originals/03CAH326430A748-3-260929064206163.jpg",
+   "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH326430A748-3-260929064206163.jpg",
+   "mediaType": 1,
+   "mediaPositionType": 0,
+   "showOnWeb": true,
+   "showOnApp": true,
+   "showOnProductDetail": true,
+   "showOnProductList": true,
+   "useOriginalDimensions": false,
+   "displayOrder": 3
+  },
+  {
+   "name": null,
+   "id": 256628,
+   "cdnDomainName": "https://img-phantomhotic.sm.mncdn.com/",
+   "filePath": "img/assets/base/originals/03CAH326430A748-4-260929064206227.jpg",
+   "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH326430A748-4-260929064206227.jpg",
+   "mediaType": 1,
+   "mediaPositionType": 0,
+   "showOnWeb": true,
+   "showOnApp": true,
+   "showOnProductDetail": true,
+   "showOnProductList": true,
+   "useOriginalDimensions": false,
+   "displayOrder": 4
+  },
+  {
+   "name": null,
+   "id": 256629,
+   "cdnDomainName": "https://img-phantomhotic.sm.mncdn.com/",
+   "filePath": "img/assets/base/originals/03CAH326430A748-5-260929064206275.jpg",
+   "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH326430A748-5-260929064206275.jpg",
+   "mediaType": 1,
+   "mediaPositionType": 0,
+   "showOnWeb": true,
+   "showOnApp": true,
+   "showOnProductDetail": true,
+   "showOnProductList": true,
+   "useOriginalDimensions": false,
+   "displayOrder": 5
+  },
+  {
+   "name": null,
+   "id": 256630,
+   "cdnDomainName": "https://img-phantomhotic.sm.mncdn.com/",
+   "filePath": "img/assets/base/originals/03CAH326430A748-6-260929064206326.jpg",
+   "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH326430A748-6-260929064206326.jpg",
+   "mediaType": 1,
+   "mediaPositionType": 0,
+   "showOnWeb": true,
+   "showOnApp": true,
+   "showOnProductDetail": true,
+   "showOnProductList": true,
+   "useOriginalDimensions": false,
+   "displayOrder": 6
+  },
+  {
+   "name": null,
+   "id": 256631,
+   "cdnDomainName": "https://img-phantomhotic.sm.mncdn.com/",
+   "filePath": "img/assets/base/originals/03CAH326430A748-7-260929064206392.jpg",
+   "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH326430A748-7-260929064206392.jpg",
+   "mediaType": 1,
+   "mediaPositionType": 0,
+   "showOnWeb": true,
+   "showOnApp": true,
+   "showOnProductDetail": true,
+   "showOnProductList": true,
+   "useOriginalDimensions": false,
+   "displayOrder": 7
+  },
+  {
+   "name": null,
+   "id": 256632,
+   "cdnDomainName": "https://img-phantomhotic.sm.mncdn.com/",
+   "filePath": "img/assets/base/originals/03CAH326430A748-8-260929064206441.jpg",
+   "url": "https://img-phantomhotic.sm.mncdn.com/img/assets/base/originals/03CAH326430A748-8-260929064206441.jpg",
+   "mediaType": 1,
+   "mediaPositionType": 0,
+   "showOnWeb": true,
+   "showOnApp": true,
+   "showOnProductDetail": true,
+   "showOnProductList": true,
+   "useOriginalDimensions": false,
+   "displayOrder": 8
+  }
+ ],
+ "network": [
+  {
+   "ID": 1236167,
+   "DisplayOrder": 1,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 225799,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1236167,
+     "CDNPath": "8684782317284_01.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 2,
+     "CDNPathWithVersion": "8684782317284_01.jpg?v=2",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782317284_01.jpg?v=2"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1236168,
+   "DisplayOrder": 2,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 225799,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1236168,
+     "CDNPath": "8684782317284_02.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 2,
+     "CDNPathWithVersion": "8684782317284_02.jpg?v=2",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782317284_02.jpg?v=2"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1236169,
+   "DisplayOrder": 3,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 225799,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1236169,
+     "CDNPath": "8684782317284_03.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 2,
+     "CDNPathWithVersion": "8684782317284_03.jpg?v=2",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782317284_03.jpg?v=2"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1236170,
+   "DisplayOrder": 4,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 225799,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1236170,
+     "CDNPath": "8684782317284_04.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 2,
+     "CDNPathWithVersion": "8684782317284_04.jpg?v=2",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782317284_04.jpg?v=2"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1236171,
+   "DisplayOrder": 5,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 225799,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1236171,
+     "CDNPath": "8684782317284_05.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 2,
+     "CDNPathWithVersion": "8684782317284_05.jpg?v=2",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782317284_05.jpg?v=2"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1236172,
+   "DisplayOrder": 6,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 225799,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1236172,
+     "CDNPath": "8684782317284_06.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 2,
+     "CDNPathWithVersion": "8684782317284_06.jpg?v=2",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782317284_06.jpg?v=2"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1236173,
+   "DisplayOrder": 7,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 225799,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1236173,
+     "CDNPath": "8684782317284_07.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 2,
+     "CDNPathWithVersion": "8684782317284_07.jpg?v=2",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782317284_07.jpg?v=2"
+    }
+   ],
+   "HasImages": true
+  }
+ ],
+ "network_reordered": [
+  {
+   "ID": 1204767,
+   "DisplayOrder": 2,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 194891,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1204767,
+     "CDNPath": "8684782015968_01.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 5,
+     "CDNPathWithVersion": "8684782015968_01.jpg?v=5",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782015968_01.jpg?v=5"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1204768,
+   "DisplayOrder": 1,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 194891,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1204768,
+     "CDNPath": "8684782015968_02.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 5,
+     "CDNPathWithVersion": "8684782015968_02.jpg?v=5",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782015968_02.jpg?v=5"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1204769,
+   "DisplayOrder": 3,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 194891,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1204769,
+     "CDNPath": "8684782015968_03.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 5,
+     "CDNPathWithVersion": "8684782015968_03.jpg?v=5",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782015968_03.jpg?v=5"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1204770,
+   "DisplayOrder": 4,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 194891,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1204770,
+     "CDNPath": "8684782015968_04.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 5,
+     "CDNPathWithVersion": "8684782015968_04.jpg?v=5",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782015968_04.jpg?v=5"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1204771,
+   "DisplayOrder": 5,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 194891,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1204771,
+     "CDNPath": "8684782015968_05.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 5,
+     "CDNPathWithVersion": "8684782015968_05.jpg?v=5",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782015968_05.jpg?v=5"
+    }
+   ],
+   "HasImages": true
+  },
+  {
+   "ID": 1204772,
+   "DisplayOrder": 6,
+   "MediaFormat": null,
+   "AltText": null,
+   "Title": null,
+   "ProductID": 194891,
+   "VariantID": null,
+   "AttributeOptionID": null,
+   "ProductMediaFileDOList": [
+    {
+     "ID": 0,
+     "ProductMediaID": 1204772,
+     "CDNPath": "8684782015968_06.jpg",
+     "SizeCode": null,
+     "Width": null,
+     "Height": null,
+     "SizeID": null,
+     "MediaVersionNumber": 5,
+     "CDNPathWithVersion": "8684782015968_06.jpg?v=5",
+     "ImageResizePath": "https://img-network.mncdn.com/mnresize/{width}/{height}/productimages/8684782015968_06.jpg?v=5"
+    }
+   ],
+   "HasImages": true
+  }
+ ],
+ "twist_koleksiyon": [
+  {
+   "id": 87775,
+   "name": "TW6260025124003_0.jpg",
+   "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_0.jpg",
+   "documentType": "Image",
+   "isDefault": true,
+   "order": 0,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Koleksiyon/TW6260025124003_0.jpg"
+  },
+  {
+   "id": 87776,
+   "name": "TW6260025124003.jpg",
+   "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 1,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Koleksiyon/TW6260025124003.jpg"
+  },
+  {
+   "id": 87774,
+   "name": "TW6260025124003_1.jpg",
+   "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_1.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 2,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Koleksiyon/TW6260025124003_1.jpg"
+  },
+  {
+   "id": 87773,
+   "name": "TW6260025124003_2.jpg",
+   "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_2.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 3,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Koleksiyon/TW6260025124003_2.jpg"
+  },
+  {
+   "id": 87772,
+   "name": "TW6260025124003_3.jpg",
+   "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_3.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 4,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Koleksiyon/TW6260025124003_3.jpg"
+  },
+  {
+   "id": 85616,
+   "name": "TW6260025124003_10.jpg",
+   "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_10.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 11,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Koleksiyon/TW6260025124003_10.jpg"
+  },
+  {
+   "id": 85615,
+   "name": "TW6260025124003_11.jpg",
+   "filePath": "/Twist/products/FW2627/Koleksiyon/TW6260025124003_11.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 12,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Koleksiyon/TW6260025124003_11.jpg"
+  }
+ ],
+ "twist_stillife": [
+  {
+   "id": 89514,
+   "name": "TW6260052109001.jpg",
+   "filePath": "/Twist/products/FW2627/Stillife/TW6260052109001.jpg",
+   "documentType": "Image",
+   "isDefault": true,
+   "order": 1,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Stillife/TW6260052109001.jpg"
+  },
+  {
+   "id": 90256,
+   "name": "TW6260052109001_1.jpg",
+   "filePath": "/Twist/products/FW2627/Stillife/TW6260052109001_1.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 2,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Stillife/TW6260052109001_1.jpg"
+  },
+  {
+   "id": 90255,
+   "name": "TW6260052109001_2.jpg",
+   "filePath": "/Twist/products/FW2627/Stillife/TW6260052109001_2.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 3,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Stillife/TW6260052109001_2.jpg"
+  },
+  {
+   "id": 89513,
+   "name": "TW6260052109001_3.jpg",
+   "filePath": "/Twist/products/FW2627/Stillife/TW6260052109001_3.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 4,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Stillife/TW6260052109001_3.jpg"
+  },
+  {
+   "id": 89512,
+   "name": "TW6260052109001_4.jpg",
+   "filePath": "/Twist/products/FW2627/Stillife/TW6260052109001_4.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 5,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Stillife/TW6260052109001_4.jpg"
+  },
+  {
+   "id": 89511,
+   "name": "TW6260052109001_5.jpg",
+   "filePath": "/Twist/products/FW2627/Stillife/TW6260052109001_5.jpg",
+   "documentType": "Image",
+   "isDefault": false,
+   "order": 6,
+   "templateId": 0,
+   "productDocumentGroup": {
+    "id": 4
+   },
+   "integrationCode": "/GORSELLER/Twist/FW2627/Stillife/TW6260052109001_5.jpg"
+  }
+ ],
+ "koton": [
+  {
+   "pk": 9574128,
+   "status": "active",
+   "image": "https://ktnimg2.mncdn.com/products/2025/10/11/3097970/d7e84924-5112-43c0-bd14-08a8e9c24138.jpg",
+   "order": 1,
+   "created_date": "2026-06-30T16:05:32.689574Z",
+   "specialimage_set": []
+  },
+  {
+   "pk": 9574130,
+   "status": "active",
+   "image": "https://ktnimg2.mncdn.com/products/2025/06/20/3097973/7bd7b9d2-a703-4b35-b4cf-fea572f7bda3.jpg",
+   "order": 2,
+   "created_date": "2026-06-30T16:05:32.969174Z",
+   "specialimage_set": []
+  },
+  {
+   "pk": 9574131,
+   "status": "active",
+   "image": "https://ktnimg2.mncdn.com/products/2025/06/20/3097973/a0756259-6c61-4a4e-8d9d-0aa914482617.jpg",
+   "order": 3,
+   "created_date": "2026-06-30T16:05:33.045986Z",
+   "specialimage_set": []
+  },
+  {
+   "pk": 9574132,
+   "status": "active",
+   "image": "https://ktnimg2.mncdn.com/products/2025/06/20/3097973/187d7e6b-7100-4d35-854b-35cfdf47cd85.jpg",
+   "order": 4,
+   "created_date": "2026-06-30T16:05:33.116654Z",
+   "specialimage_set": []
+  },
+  {
+   "pk": 9574134,
+   "status": "active",
+   "image": "https://ktnimg2.mncdn.com/products/2025/06/20/3097973/6e696f20-ea7e-4d66-99dc-34f93bdc0b54.jpg",
+   "order": 5,
+   "created_date": "2026-06-30T16:05:33.260238Z",
+   "specialimage_set": []
+  }
+ ]
+}

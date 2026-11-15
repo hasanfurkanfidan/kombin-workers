@@ -2,9 +2,12 @@
 
 Platform: Next.js. Category pages and product pages both ship `__NEXT_DATA__`.
 
-- Discovery: robots.txt disallows `?page=*` / `&page=` (and size, colour, sort filters), so a category is read **once**:
-  its first page, 24 products. That is the most a polite crawler can take from a category page; the sitemap
-  (`/sitemap.xml`, listed in robots.txt) would be the way to reach the rest in a later task.
+- Discovery: robots.txt disallows `?page=*` / `&page=` (and size, colour, sort filters), so category pages can only be
+  read once (their first page, 24 products). The way past page one is the sitemap robots.txt lists (`/sitemap.xml` ->
+  `products-1.xml`, ~1260 `/urun/<slug>` URLs, which robots.txt allows): the product sitemap is read (2 requests),
+  slugs that name a category we do not have (dress, blouse, earrings ...) are dropped *before* any product request, and
+  the rest are dealt out one category at a time so the per-source cap takes an even share. If the sitemap cannot be read
+  the source falls back to the first page of every category.
 - Fetch: `/urun/<routePath>` - `__NEXT_DATA__.props.pageProps.data.response.product` has the per-size barcodes with stock,
   price, images (`documents`), attributes.
 
@@ -21,17 +24,25 @@ from __future__ import annotations
 
 from collections.abc import AsyncIterator
 from decimal import Decimal, InvalidOperation
+from itertools import zip_longest
 from typing import Any
+from urllib.parse import urlsplit
 
-from kombin_workers.http import FetchError
+import structlog
+
+from kombin_workers.http import FetchError, RobotsBlocked, SourceAborted
 from kombin_workers.models import NormalizedOffer, NormalizedProduct, StockStatus
 from kombin_workers.normalize.attributes import infer_attributes
 from kombin_workers.normalize.categories import map_category
 from kombin_workers.normalize.colors import map_color, try_map_color
+from kombin_workers.normalize.images import order_gallery
 from kombin_workers.normalize.sizes import normalize_sizes
 from kombin_workers.normalize.text import clean_text, title_case_tr
 from kombin_workers.sources.base import BaseSource, Listing, ListingRef, Page, SkipItem, adult_audience
 from kombin_workers.sources.embedded import dig, extract_ld_json, extract_next_data
+from kombin_workers.sources.sitemap import parse_sitemap
+
+log = structlog.get_logger(__name__)
 
 BASE = "https://www.twist.com.tr"
 IMAGE_BASE = "https://cdn.twist.com.tr/mnresize/2400/-"
@@ -57,11 +68,51 @@ class TwistSource(BaseSource):
     brand_name = "Twist"
     seller_name = "Twist"
     website_url = BASE
-    notes = "Next.js (__NEXT_DATA__); robots.txt forbids ?page=, so one page (24 products) per category."
+    notes = "Next.js (__NEXT_DATA__); robots.txt forbids ?page=, so products come from the product sitemap."
 
     async def discover(self) -> AsyncIterator[ListingRef]:
+        refs = await self._sitemap_refs()
+        if refs:
+            for ref in refs:
+                yield ref
+            return
+        log.warning("twist_sitemap_unavailable_using_category_pages")
         async for ref in self.paged_discovery(LISTINGS, self._read_page):
             yield ref
+
+    async def _sitemap_refs(self) -> list[ListingRef]:
+        """Product refs from the sitemaps listed in robots.txt, balanced by the category their slug names; [] if none."""
+        try:
+            roots = (await self.http.robots_for(BASE)).sitemaps or [f"{BASE}/sitemap.xml"]
+            urls: list[str] = []
+            for root in roots:
+                urls.extend(await self._product_urls(root))
+        except SourceAborted:
+            raise
+        except (FetchError, RobotsBlocked) as exc:
+            log.warning("twist_sitemap_failed", error=str(exc))
+            return []
+        buckets: dict[str, list[ListingRef]] = {}
+        for url in dict.fromkeys(urls):
+            slug = url.rsplit("/", 1)[-1]
+            hint = map_category(slug.replace("-", " "), source="twist")
+            if hint is None or not await self.http.is_allowed(url):
+                continue  # a category we do not have, or a URL robots.txt disallows
+            buckets.setdefault(hint, []).append(ListingRef(url=url, key=slug, category_hint=hint))
+        # one product of each category in turn, so a capped run is an even share of every category
+        return [ref for round_ in zip_longest(*buckets.values()) for ref in round_ if ref is not None]
+
+    async def _product_urls(self, sitemap_url: str, depth: int = 0) -> list[str]:
+        """`/urun/` URLs of a sitemap; an index is followed one level down, into product sitemaps only."""
+        if urlsplit(sitemap_url).hostname != urlsplit(BASE).hostname:
+            return []
+        sitemap = parse_sitemap(await self.http.get_text(sitemap_url))
+        found = [u for u in sitemap.urls if urlsplit(u).path.startswith("/urun/")]
+        if depth == 0:
+            for child in sitemap.children:
+                if "product" in urlsplit(child).path.lower():
+                    found.extend(await self._product_urls(child, depth + 1))
+        return found
 
     async def _read_page(self, listing: Listing, page: int) -> Page:
         if page > 1:  # `?page=` is disallowed by robots.txt
@@ -113,7 +164,7 @@ def normalize_product(product: dict[str, Any], url: str, ld: dict[str, Any] | No
     base = _money(product.get("basePrice"))
     original = base if base is not None and base > price else None
 
-    images = _images(product)
+    images = gallery_urls(product)
     if not images:
         raise SkipItem("no-images")
 
@@ -176,12 +227,13 @@ def _attributes(product: dict[str, Any]) -> dict[str, str]:
     return result
 
 
-def _images(product: dict[str, Any]) -> list[str]:
+def gallery_urls(product: dict[str, Any]) -> list[str]:
+    """Every Image `documents[]` entry (default first, then `order`); `Stillife` shots first, at most 8 (see `normalize.images`)."""
     documents = [
         d for d in product.get("documents") or [] if isinstance(d, dict) and d.get("filePath") and d.get("documentType") == "Image"
     ]
     documents.sort(key=lambda d: (not d.get("isDefault"), int(d.get("order") or 0)))
-    return [f"{IMAGE_BASE}{d['filePath']}" for d in documents]
+    return order_gallery(f"{IMAGE_BASE}{d['filePath']}" for d in documents)
 
 
 def _sizes_in_stock(product: dict[str, Any]) -> tuple[list[str], int]:

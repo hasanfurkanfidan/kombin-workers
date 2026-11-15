@@ -356,12 +356,13 @@ def test_twist_normalize_page_reads_next_data_and_ld_json() -> None:
     assert offer.available_sizes == ["34", "36", "38", "40"]
 
 
-async def test_twist_reads_only_the_first_page_of_a_category(
+async def test_twist_without_a_sitemap_falls_back_to_the_first_page_of_a_category(
     router: respx.MockRouter, http: PoliteClient, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """robots.txt disallows `?page=`: even with max_pages=3 the category page is read once, and never with a page parameter."""
     monkeypatch.setattr(twist, "LISTINGS", (Listing("kadin-gomlek-modelleri", "ust-giyim/gomlek"),))
     allow_robots(router, TWIST_URL, fixture_text("twist/robots.txt"))
+    router.get(f"{TWIST_URL}/sitemap.xml").respond(404)
     route = router.get(f"{TWIST_URL}/kadin-gomlek-modelleri").respond(200, text=next_data_page(fixture_json("twist/listing_kadin-gomlek.json")))
     refs = [ref async for ref in twist.TwistSource(http, max_pages=3).discover()]
     assert route.call_count == 1

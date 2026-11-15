@@ -16,7 +16,7 @@ from kombin_workers.http import PoliteClient
 from kombin_workers.logging_setup import configure_logging
 from kombin_workers.pipeline import RunSummary, run_source
 from kombin_workers.scheduler import daemon_loop
-from kombin_workers.settings import BOT_CONTACT_PLACEHOLDER, Settings, get_settings
+from kombin_workers.settings import Settings, get_settings
 from kombin_workers.sources.registry import SOURCE_CLASSES, UnknownSourceError, build_source, runnable_slugs
 
 app = typer.Typer(help="Kombin ingestion workers.", no_args_is_help=True, add_completion=False)
@@ -34,8 +34,11 @@ def _bootstrap() -> Settings:
             stream.reconfigure(encoding="utf-8")
     settings = get_settings()
     configure_logging(json_logs=settings.log_json)
-    if settings.bot_contact == BOT_CONTACT_PLACEHOLDER:
-        log.warning("bot_contact_not_set", hint="set BOT_CONTACT before running against real sites")
+    if not settings.has_bot_contact:
+        log.warning(
+            "bot_contact_not_set",
+            hint="the User-Agent has no contact part; set BOT_CONTACT to a real, non-personal address before production",
+        )
     return settings
 
 

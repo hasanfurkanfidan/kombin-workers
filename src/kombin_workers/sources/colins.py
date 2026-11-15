@@ -37,6 +37,7 @@ from kombin_workers.models import NormalizedOffer, NormalizedProduct, StockStatu
 from kombin_workers.normalize.attributes import infer_attributes
 from kombin_workers.normalize.categories import map_category
 from kombin_workers.normalize.colors import map_color
+from kombin_workers.normalize.images import order_gallery
 from kombin_workers.normalize.sizes import normalize_sizes
 from kombin_workers.normalize.text import clean_text
 from kombin_workers.sources.base import BaseSource, Listing, ListingRef, Page, SkipItem, adult_audience
@@ -122,6 +123,15 @@ class ColinsSource(BaseSource):
         return normalize_product(dict(ref.data), html, ref.url)
 
 
+def gallery_urls(ld: dict[str, Any], card: dict[str, Any]) -> list[str]:
+    """The ld+json `image` list (the whole gallery), else the card's images; packshot hints first, at most 8."""
+    ld_images = ld.get("image")
+    if isinstance(ld_images, str):
+        ld_images = [ld_images]
+    ordered = order_gallery(clean_text(i) for i in ld_images or [] if isinstance(i, str))
+    return ordered or order_gallery(clean_text(i) for i in card.get("imageUrls") or [] if isinstance(i, str))
+
+
 def normalize_product(card: dict[str, Any], html: str, url: str) -> NormalizedOffer:
     ld = find_ld_type(html, "Product")
     if ld is None:
@@ -144,9 +154,7 @@ def normalize_product(card: dict[str, Any], html: str, url: str) -> NormalizedOf
     old = _tr_price(card.get("oldPrice"))
     original = old if old is not None and old > price else None
 
-    images = [clean_text(i) for i in ld.get("image") or [] if isinstance(i, str)] or [
-        clean_text(i) for i in card.get("imageUrls") or [] if isinstance(i, str)
-    ]
+    images = gallery_urls(ld, card)
     if not images:
         raise SkipItem("no-images")
 

@@ -29,6 +29,7 @@ from kombin_workers.normalize.attributes import infer_attributes
 from kombin_workers.normalize.audience import map_audience
 from kombin_workers.normalize.categories import map_category
 from kombin_workers.normalize.colors import map_color, try_map_color
+from kombin_workers.normalize.images import order_gallery
 from kombin_workers.normalize.sizes import normalize_sizes
 from kombin_workers.normalize.text import clean_text, strip_brand_prefix
 from kombin_workers.sources.base import BaseSource, Listing, ListingRef, Page, SkipItem
@@ -112,6 +113,15 @@ def normalize_page(html: str, url: str) -> NormalizedOffer:
     return normalize_product(product, url)
 
 
+def gallery_urls(product: dict[str, Any]) -> list[str]:
+    """Every `media[].imageUrl` in the site's order, cut-out (`.png`) shots first, at most 8 (see `normalize.images`)."""
+    return order_gallery(
+        clean_text(media["imageUrl"])
+        for media in product.get("media", [])
+        if isinstance(media, dict) and media.get("imageUrl")
+    )
+
+
 def normalize_product(product: dict[str, Any], url: str) -> NormalizedOffer:
     title = clean_text(product.get("name"))
     description = clean_text(product.get("description"))
@@ -133,11 +143,7 @@ def normalize_product(product: dict[str, Any], url: str) -> NormalizedOffer:
         raise SkipItem("no-price")
     original = _original_price(price_block, price)
 
-    images = [
-        clean_text(media["imageUrl"])
-        for media in product.get("media", [])
-        if isinstance(media, dict) and media.get("imageUrl")
-    ]
+    images = gallery_urls(product)
     if not images:
         raise SkipItem("no-images")
 

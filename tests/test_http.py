@@ -203,13 +203,30 @@ async def test_non_json_body_is_a_fetch_error(router: respx.MockRouter) -> None:
             await client.get_json("https://a.test/p")
 
 
-def test_default_user_agent_keeps_the_placeholder_until_the_owner_fills_it(monkeypatch: pytest.MonkeyPatch) -> None:
-    for name in ("BOT_CONTACT", "KOMBIN_BOT_CONTACT"):
-        monkeypatch.delenv(name, raising=False)
+BARE_UA = "KombinBot/0.1 (+https://kombin.app/bot)"
+
+
+@pytest.mark.parametrize("value", [None, "", "   ", "[YOUR EMAIL]", "[your email]", "[anything in brackets]"])
+def test_user_agent_omits_the_contact_part_when_unset_or_still_the_placeholder(
+    monkeypatch: pytest.MonkeyPatch, value: str | None
+) -> None:
+    monkeypatch.delenv("KOMBIN_BOT_CONTACT", raising=False)
+    if value is None:
+        monkeypatch.delenv("BOT_CONTACT", raising=False)
+    else:
+        monkeypatch.setenv("BOT_CONTACT", value)
     settings = Settings(_env_file=None)
-    assert settings.user_agent == "KombinBot/0.1 (+https://kombin.app/bot; contact: [YOUR EMAIL])"
-    monkeypatch.setenv("BOT_CONTACT", "ops@example.org")
-    assert Settings(_env_file=None).user_agent.endswith("contact: ops@example.org)")
+    assert settings.user_agent == BARE_UA
+    assert "YOUR EMAIL" not in settings.user_agent.upper()
+    assert not settings.has_bot_contact
+
+
+def test_user_agent_carries_a_real_contact(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("KOMBIN_BOT_CONTACT", raising=False)
+    monkeypatch.setenv("BOT_CONTACT", " ops@example.org ")
+    settings = Settings(_env_file=None)
+    assert settings.user_agent == "KombinBot/0.1 (+https://kombin.app/bot; contact: ops@example.org)"
+    assert settings.has_bot_contact
 
 
 # --------------------------------------------------------------------------------------------- robots.txt

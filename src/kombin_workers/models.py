@@ -84,7 +84,7 @@ class SellerKind(StrEnum):
     BRAND_STORE = "BrandStore"
 
 
-MAX_IMAGES = 6
+MAX_IMAGES = 6  # the backend rejects more than 6 `imageUrls` per item (UpsertOffers/Validator.cs); sources collect up to 8
 
 
 def _strip(value: str) -> str:

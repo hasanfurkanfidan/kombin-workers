@@ -29,6 +29,7 @@ from kombin_workers.normalize.attributes import infer_attributes
 from kombin_workers.normalize.audience import map_audience
 from kombin_workers.normalize.categories import map_category
 from kombin_workers.normalize.colors import map_color
+from kombin_workers.normalize.images import order_gallery
 from kombin_workers.normalize.sizes import normalize_sizes
 from kombin_workers.normalize.text import clean_text, html_to_text, strip_brand_prefix
 from kombin_workers.sources.base import BaseSource, Listing, ListingRef, Page, SkipItem
@@ -124,11 +125,7 @@ def normalize_product(data: dict[str, Any], url: str) -> NormalizedOffer:
     retail = _decimal(product.get("retail_price"))
     original = retail if retail is not None and retail > price else None
 
-    images = [
-        clean_text(image["image"])
-        for image in sorted(product.get("productimage_set", []), key=lambda i: i.get("order", 0))
-        if image.get("image") and image.get("status", "active") == "active"
-    ]
+    images = gallery_urls(product)
     if not images:
         raise SkipItem("no-images")
 
@@ -179,6 +176,15 @@ def normalize_product(data: dict[str, Any], url: str) -> NormalizedOffer:
             material=inferred.material,
             description=description[:4000] or None,
         ),
+    )
+
+
+def gallery_urls(product: dict[str, Any]) -> list[str]:
+    """Every active `productimage_set` entry by `order`, packshot hints first, at most 8 (see `normalize.images`)."""
+    return order_gallery(
+        clean_text(image["image"])
+        for image in sorted(product.get("productimage_set", []), key=lambda i: i.get("order", 0))
+        if image.get("image") and image.get("status", "active") == "active"
     )
 
 
