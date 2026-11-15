@@ -61,7 +61,7 @@ backend would be cleared by the next run.
 | externalId / modelCode | product id `<style>_<colour>` / `<styleNumber>-<colour id>`, e.g. `12298420-2161` |
 | Audience | `englishGender`, `targetGroup`, tags (`gender-male`) |
 | Category | `ediCategory` / `ediSubCategory` ("Tişört") and the title |
-| Images | `media[]` (7-9 per product): `imageUrl`, `mimeType`, `isFrontImage` / `isBackImage`, no alt. **Hint: `.png` files** (transparent-background cut-outs) go first; the `.jpg` shots follow in site order. Front and back flags are not used (a front image can be on-figure). Unverified by eye, see "Images" below |
+| Images | `media[]` (7-9 per product): `imageUrl`, `mimeType`, `isFrontImage` / `isBackImage`, no alt. **Hint: `.png` files** (mostly transparent-background shots, not always flat) go first; the `.jpg` shots follow in site order. Front and back flags are not used (a front image can be on-figure). Spot check: first image person-free on 4 of 5 products, see "Images" below |
 | Rate used | 1 request/second; pages are ≈ 0.5–1 MB each, so a 1500-product run takes ≈ 30 minutes |
 
 ### Network – `network` → seller `network-store`
@@ -173,7 +173,7 @@ first. `normalize/images.py` does the ordering; the sources only call `order_gal
 
 **Rule.** Evidence is the URL and the site's own data only – an image is never downloaded to be classified (the vision
 service does that later):
-1. a word in the file path (`packshot`, `flat`, `flatlay`, `ghost`, `hanger`, `still-life`/`stillife`, `cutout`, `detail`/`detay`) or a
+1. a word in the file path (`packshot`, `flat`, `flatlay`, `ghost`, `hanger`, `still-life`/`stillife`, `cutout`) or a
    per-host rule below → likely person-free;
 2. a word such as `model`, `manken`, `lookbook`, `lifestyle`, `editorial`, `campaign` → likely worn;
 3. otherwise unknown. Order: likely person-free, unknown, likely worn – each group in the site's own order. A site with
@@ -183,18 +183,40 @@ service does that later):
 |---|---|---|---|
 | Derimod | `images[]` by `position` (up to 10 seen) | none: hashed file names, no `alt`, `variant_ids` empty | metadata of 2 products from 2 collections (live) and the saved collection fixture |
 | Koton | `productimage_set` by `order` (3-5) | none: GUID file names, no alt | metadata of 3 product pages; gallery opens with on-figure shots on the one page viewed |
-| Jack & Jones | `media[]` (7-9) | **`.png` (`mimeType image/png`) first**: transparent-background cut-outs; `.jpg` shots after. `isFrontImage` / `isBackImage` are not used | metadata of 2 product pages (5 of 9 files are `.png` on one, 1 of 7 on the other). **Not confirmed by eye** |
+| Jack & Jones | `media[]` (7-9) | **`.png` (`mimeType image/png`) first**: transparent-background cut-outs; `.jpg` shots after. `isFrontImage` / `isBackImage` are not used | metadata of 2 product pages (5 of 9 files are `.png` on one, 1 of 7 on the other); spot check **4 of 5** person-free (below) |
 | Network | `MediaList[]` by `DisplayOrder` (3-7) | none: `AltText` / `Title` / `MediaFormat` null | metadata of 21 products (listing records) |
 | Hotiç | `pictures[]` by `displayOrder` (4-8) | none: `mediaType` 1 / `mediaPositionType` 0 on all | metadata of 33 products (listing records) |
-| Twist | `documents[]` (6-7) | **path folder `/Stillife/` first** (still-life shots); `/Koleksiyon/` unknown | metadata of 2 product pages (one of each folder). **Not confirmed by eye** |
+| Twist | `documents[]` (6-7) | **path folder `/Stillife/` first** (still-life shots); `/Koleksiyon/` unknown | metadata of 2 product pages (one of each folder); spot check **4 of 5** person-free (below) |
 | Colin's | ld+json `image` (6-8) | none: numeric ids, no alt | metadata of the saved pages and 2 live pages |
 
-**What is and is not verified.** The hint rules rest on file names, MIME types, folder names and field values read from real
-pages and listing records on 2026-11-15. The images themselves were **not** classified: the task forbids downloading images to
-classify them, and a visual spot check (bulk image download, an in-page contact sheet) was refused in this session, so the
-"person-free" meaning of `.png` at Jack & Jones and of `Stillife` at Twist is an inference from naming and format, not an
-observation, and the other five sources give no hint at all (so for them the share of "first image likely person-free" is 0 by
-construction). A person looking at one product page per brand should confirm or drop the two rules in `HOST_RULES`.
+**What is and is not verified.** The hint rules start from file names, MIME types, folder names and field values read from real
+pages and listing records on 2026-11-15. Images were never downloaded for classification. A spot check followed (below): product
+pages opened normally in the browser pane, looking at the image each rule puts first. The other five sources give no hint at all
+(so for them the share of "first image likely person-free" is 0 by construction).
+`detail` / `detay` was **removed** from the generic person-free words (detail shots are often close-ups on a model); it is no hint.
+
+### Spot check of the two rules (2026-11-15)
+
+Ten product pages, five per rule, each opened as a normal visit; the table says whether the image we put first shows no person.
+Rule: keep a rule when it holds on at least 4 of 5, remove it otherwise. Both hold on 4 of 5 and stay.
+
+| Site | Product | First image we send | Person-free? |
+|---|---|---|---|
+| Twist | Karma Aksesuarlı Sneaker (`kahverengi-karma-aksesuarli-sneaker`) | `.../Stillife/TW6260062007006.jpg` | yes (shoe alone) |
+| Twist | Kahverengi Bot (`kahverengi-bot-20828`) | `.../Stillife/TW6260034023006.jpg` | yes (boot alone) |
+| Twist | Kovboy Botu Figürlü Metal Tokalı Kemer | `.../Stillife/TW6260053025021.jpg` | yes (belt alone) |
+| Twist | Dokulu Deri Görünümlü Tote Çanta | `.../Stillife/TW6260052042001.jpg` | yes (bag alone) |
+| Twist | Charm'lı Ekose Desen Çanta | `.../Stillife/TW6260052105074_1.jpg` | **no** (a model holds the bag; the product's only picture) |
+| Jack & Jones | Erkek Eddie 275 Loose Fit Jean (12216879_2103) | `001/...png` | yes (flat jeans) |
+| Jack & Jones | Kadın Uzun Kollu Gömlek – Caro (12270951_1242) | `001/...png` | yes (flat shirt) |
+| Jack & Jones | Erkek Kapüşonlu Puffer – Galaxy (12303930_2161) | `003/...png` | **no** (worn by a model; every picture of this product is a `.png`, so the rule cannot tell them apart) |
+| Jack & Jones | Erkek Bisiklet Yaka Triko – Milano (12284507_1973) | `001/...png` | yes (flat sweater) |
+| Jack & Jones | Kadın Barrel Fit Pantolon – Chloe (12292929_108) | `001/...png` | yes (flat trousers) |
+
+Limits of the check: five products per rule, one look each. The Twist `Stillife` folder only exists for shoes, bags and belts (clothes
+sit in `Koleksiyon`, no verdict), and one `Stillife` file is a worn shot, so a `_1` suffix may mark a styled picture (not enough
+evidence to add a rule). At Jack & Jones the `.png` rule only helps when the gallery mixes `.png` and `.jpg`; where all files are `.png` the
+site's order stands, and its first picture can be a model.
 
 **Twist: beyond page one (decision).** `Disallow: /*?page=*` and `/*&page=` stay in force, so no `?page=` URL is ever built. The
 `Sitemap:` line of robots.txt lists `/sitemap.xml`, an index of `/export/Twist/sitemap/products-1.xml` (1263 `/urun/<slug>`
@@ -221,7 +243,7 @@ sent image matches a hint rule (`normalize.images`), i.e. it measures the rule, 
 |---|---|---|---|---|---|---|
 | derimod | 387 (366 / 21) | unknown-category 13 | none | 5.8 | 0 % (no hint on this site) | 200 s |
 | koton | 387 (193 / 194) | unknown-category 13 | none | 5.3 | 0 % (no hint) | 420 s |
-| jack-jones | 372 (7 / 365) | unknown-category 28 | none | 5.7 | **99 %** (`.png` rule, unverified by eye) | 416 s |
+| jack-jones | 372 (7 / 365) | unknown-category 28 | none | 5.7 | **99 %** (`.png` rule; spot check 4 of 5, so the real share is lower) | 416 s |
 | network | 398 (0 / 398) | unknown-category 2 | none | 5.5 | 0 % (no hint) | 28 s |
 | hotic | 400 (3 / 397) | – | none | 5.9 | 0 % (no hint) | 39 s |
 | twist | 399 (222 / 177) | unknown-category 1 | none | 5.4 | **21 %** (`Stillife` folder) | 405 s |

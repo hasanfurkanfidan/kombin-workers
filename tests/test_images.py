@@ -45,8 +45,15 @@ def test_person_free_hints_come_first_then_unknown_then_worn() -> None:
     unknown = "https://img.test/p/2.jpg"
     flat = "https://img.test/p/flat_view.jpg"
     ghost = "https://img.test/p/GHOST-1.jpg"
-    detail = "https://img.test/p/detail.jpg"
-    assert order_gallery([worn, unknown, flat, ghost, detail]) == [flat, ghost, detail, unknown, worn]
+    cutout = "https://img.test/p/cut-out.png"
+    assert order_gallery([worn, unknown, flat, ghost, cutout]) == [flat, ghost, cutout, unknown, worn]
+
+
+def test_detail_shots_are_no_hint() -> None:
+    """Detail shots are often close-ups on a model, so `detail` / `detay` neither promotes nor demotes an image."""
+    urls = ["https://img.test/p/1.jpg", "https://img.test/p/detail_2.jpg", "https://img.test/p/detay-3.jpg"]
+    assert [person_free_hint(u) for u in urls] == [None, None, None]
+    assert order_gallery(urls) == urls
 
 
 def test_ordering_happens_before_the_cut_so_a_late_packshot_survives() -> None:

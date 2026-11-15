@@ -5,8 +5,9 @@ A source collects every gallery image of a product, in the site's own order, and
 We never download an image to classify it (the vision service does that later); the only evidence used is what the
 URL itself and the site's data say:
 
-1. A hint in the file name / path (`packshot`, `flat`, `ghost`, `hanger`, `stillife`, `cutout`, `detail` ...) or one of
+1. A hint in the file name / path (`packshot`, `flat`, `ghost`, `hanger`, `stillife`, `cutout` ...) or one of
    the per-host rules in `HOST_RULES` (verified per brand, see docs/sources.md) marks an image *likely person-free*.
+   (`detail` / `detay` is deliberately *not* a hint: detail shots are often close-ups on a model.)
 2. A hint of the opposite kind (`model`, `lookbook`, `lifestyle`, ...) marks it *likely worn*.
 3. Everything else is *unknown* and keeps the site's order.
 
@@ -26,7 +27,7 @@ from urllib.parse import urlsplit
 GALLERY_CAP = 8
 
 _PERSON_FREE_WORDS = re.compile(
-    r"(?<![a-z])(packshot|pack-shot|flat-?lay|flat|ghost|hanger|still-?life|stillife|cut-?out|detail|detay)(?![a-z])"
+    r"(?<![a-z])(packshot|pack-shot|flat-?lay|flat|ghost|hanger|still-?life|stillife|cut-?out)(?![a-z])"
 )
 _WORN_WORDS = re.compile(r"(?<![a-z])(on-?model|model|manken|lookbook|lifestyle|editorial|campaign)(?![a-z])")
 

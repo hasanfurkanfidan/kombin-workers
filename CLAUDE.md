@@ -90,7 +90,7 @@ brand + model code and a product has a single primary colour).
 
 Try-on needs photos that show the garment without a person. Every source builds its gallery with a pure
 `gallery_urls(record)` function that collects every gallery image (site order) and passes it to
-`normalize.images.order_gallery`: likely person-free first (a hint in the file path, or a per-host rule in
+`normalize.images.order_gallery`: likely person-free first (a hint in the file path, never `detail`, or a per-host rule in
 `images.HOST_RULES`), then unknown, then likely worn, each group in site order, capped at 8. **Never download an image to
 classify it** – the vision service does that. The backend accepts at most 6 `imageUrls` per item (more fails the whole
 item) and only stores images when an offer is created, so `NormalizedOffer` keeps the first 6 and a changed order does
